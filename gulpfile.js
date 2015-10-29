@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
+var bower = require('gulp-bower');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
@@ -30,9 +31,19 @@ gulp.task('js', function(){
     .pipe(gulp.dest('public/javascripts/build/'));
 });
 
+gulp.task('bower', function() { 
+  return bower()
+    .pipe(gulp.dest('./bower_components')) 
+});
+
 gulp.task('watch', function() {
   gulp.watch("public/javascripts/src/**/*.jsx", ["js"]);
   gulp.watch("sass/**/*.scss", ["sass"]);
 });
 
-gulp.task('default', ['js', 'sass', 'watch']);
+gulp.task('icons', function() { 
+  return gulp.src('./bower_components/font-awesome/fonts/**.*') 
+    .pipe(gulp.dest('./public/fonts')); 
+});
+
+gulp.task('default', ['js', 'sass', 'bower', 'icons', 'watch']);
