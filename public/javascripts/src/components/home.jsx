@@ -1,63 +1,63 @@
 var React = require('react');
+var WebAPIUtils = require('../utils/WebAPIUtils.js');
+var SessionStore = require('../stores/SessionStore.js');
+
+var LoginForm = require('./session/login.jsx');
+var SignupForm = require('./session/signup.jsx');
+
+var getStateFromStores = function() {
+  return {
+    isLoggedIn: SessionStore.isLoggedIn(),
+    user: SessionStore.getUser()
+  };
+}
 
 module.exports = React.createClass({
 
-  loginForm: function() {
+  getInitialState: function() {
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    SessionStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    SessionStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  },
+
+  renderLandingPage: function() {
     return(
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Login</h3>
-        </div>
-        <div className="panel-body">
-          <form>
-            <div className="form-group">
-              <label for="loginEmail">Email address</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email" />
-            </div>
-            <div className="form-group">
-              <label for="loginPassword">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
-        </div>
+      <div>
+        <h1>Welcome to Lounge!</h1>
+        <a className="btn btn-default" href="/signup">Sign up</a>
+        <a className="btn btn-default" href="/login">Log in</a>
       </div>
     );
   },
 
-  signupForm: function() {
+  renderHomepage: function() {
     return(
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Sign Up</h3>
-        </div>
-        <div className="panel-body">
-          <form>
-            <div className="form-group">
-              <label for="signupEmail">Email address</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email" />
-            </div>
-            <div className="form-group">
-              <label for="signupPassword">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-            </div>
-            <div className="form-group">
-              <label for="signupConfirmPassword">Confirm Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
+      <h1>Welcome back {this.state.user.firstName} {this.state.user.lastName}!</h1>
     );
   },
 
   render: function() {
+    if (this.state.isLoggedIn) {
+      return (
+        <div>
+          {this.renderHomepage()}
+        </div>
+      );
+    }
+   
     return (
       <div>
-        <h1>Home</h1>
-        {this.loginForm()}
-        {this.signupForm()}
+        {this.renderLandingPage()}
       </div>
     );
   }

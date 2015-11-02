@@ -38,6 +38,7 @@ gulp.task('bower', function() { 
 
 gulp.task('watch', function() {
   gulp.watch("public/javascripts/src/**/*.jsx", ["js"]);
+  gulp.watch("public/javascripts/src/**/*.js", ["js"]);
   gulp.watch("sass/**/*.scss", ["sass"]);
 });
 

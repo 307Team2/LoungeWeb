@@ -7,6 +7,8 @@ var createHistory = require('history').createHistory;
 
 var Lounge = require('./components/lounge.jsx');
 var Home = require('./components/home.jsx');
+var Signup = require('./components/session/signup.jsx');
+var Login = require('./components/session/login.jsx');
 
 var history = createHistory();
 
@@ -14,6 +16,8 @@ ReactDOM.render((
   <Router history={history}>
     <Route path='/' component={Lounge}>
       <IndexRoute component={Home} />
+      <Route path='signup' component={Signup} />
+      <Route path='login' component={Login} />
     </Route>
   </Router>
 ), document.getElementById('example'));
