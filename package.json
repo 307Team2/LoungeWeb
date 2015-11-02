@@ -20,12 +20,15 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-sass": "^1.1.0-beta",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-bower": "0.0.10",
     "gulp-notify": "^2.2.0",
-    "gulp-autoprefixer": "^3.1.0",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.6.0",
-    "react": "^0.14.0",
+    "history": "^1.13.0",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
+    "react-router": "1.0.0-rc3",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
   }
