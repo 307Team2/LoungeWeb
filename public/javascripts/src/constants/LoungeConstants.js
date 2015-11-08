@@ -5,8 +5,15 @@ var APIRoot = "http://localhost:3000";
 module.exports = {
 
   APIEndpoints: {
+
+    // Session
     LOGIN:          APIRoot + "/account/login",
     SIGNUP:         APIRoot + "/account/signup",
+
+    // Feed
+    POSTS:          APIRoot + "/posts/all",
+    CREATE_POST:    APIRoot + "/posts/create"
+
   },
 
   ActionTypes: keyMirror({
@@ -14,7 +21,11 @@ module.exports = {
     // Session
     LOGIN_REQUEST: null,
     LOGIN_RESPONSE: null,
-    LOGOUT: null
+    LOGOUT: null,
+
+    // Feed
+    RECEIVE_POSTS: null,
+    LOAD_POSTS: null
 
   })
 

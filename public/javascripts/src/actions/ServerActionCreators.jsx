@@ -11,5 +11,14 @@ module.exports = {
       json: json,
       errors: errors
     })
+  },
+
+  receivePosts: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_POSTS,
+      json: json,
+      errors: errors
+    })
   }
+
 }
