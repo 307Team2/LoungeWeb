@@ -26727,7 +26727,9 @@ module.exports = {
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {
-        if (res) {
+        if (error) {
+          console.log(error);
+        } else {
           json = JSON.parse(res.text);
           if (json.error) {
             ServerActionCreators.receiveLogin(null, json.error);
@@ -26746,7 +26748,9 @@ module.exports = {
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {
-        if (res) {
+        if (error) {
+          console.log(error);
+        } else {
           json = JSON.parse(res.text);
           if (json.error) {
             ServerActionCreators.receiveLogin(null, json.error);
