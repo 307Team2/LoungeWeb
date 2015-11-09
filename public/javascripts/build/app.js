@@ -30092,9 +30092,10 @@ var Header = React.createClass({displayName: "Header",
 module.exports = Header;
 
 },{"../../actions/SessionActionCreators.jsx":246,"react":240,"react-router":58}],258:[function(require,module,exports){
+(function (process){
 var keyMirror = require('keymirror');
 
-var APIRoot = "http://localhost:3000";
+var APIRoot = process.env.API_ROOT || "http://localhost:3000";
 
 var LoungeConstants = {
 
@@ -30127,7 +30128,8 @@ var LoungeConstants = {
 
 module.exports = LoungeConstants;
 
-},{"keymirror":35}],259:[function(require,module,exports){
+}).call(this,require('_process'))
+},{"_process":2,"keymirror":35}],259:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 
 var AppDispatcher = new Dispatcher();
