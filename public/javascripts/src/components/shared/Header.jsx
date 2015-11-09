@@ -17,12 +17,17 @@ module.exports = React.createClass({
     SessionActionCreators.logout();
   },
 
+  goToProfile: function() {
+    this.history.pushState(null, '/user/' + this.props.user._id);
+  },
+
   getRightLink: function() {
     if (this.props.isLoggedIn) {
       return(
         <li className="dropdown">
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.props.user.firstName} <span className="caret"></span></a>
           <ul className="dropdown-menu">
+            <li><a href="#" onClick={this.goToProfile}>My Profile</a></li>
             <li><a href="#">Account</a></li>
             <li><a href="#" onClick={this.logout}>Logout</a></li>
           </ul>

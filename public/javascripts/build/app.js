@@ -29464,7 +29464,7 @@ module.exports = {
   }
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],245:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258}],245:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 
@@ -29486,11 +29486,19 @@ module.exports = {
       json: json,
       errors: errors
     })
+  },
+
+  receiveProfileData: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_PROFILE_DATA,
+      json: json,
+      errors: errors
+    })
   }
 
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],246:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258}],246:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 
@@ -29506,7 +29514,7 @@ module.exports = {
 
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],247:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258}],247:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
@@ -29519,6 +29527,7 @@ var Home = require('./components/home.jsx');
 var Signup = require('./components/session/signup.jsx');
 var Login = require('./components/session/login.jsx');
 var Feed = require('./components/feed/Feed.jsx');
+var Profile = require('./components/profile/Profile.jsx');
 
 var history = createHistory();
 
@@ -29528,12 +29537,13 @@ ReactDOM.render((
       React.createElement(IndexRoute, {component: Home}), 
       React.createElement(Route, {path: "signup", component: Signup}), 
       React.createElement(Route, {path: "login", component: Login}), 
-      React.createElement(Route, {path: "feed", component: Feed})
+      React.createElement(Route, {path: "feed", component: Feed}), 
+      React.createElement(Route, {path: "/user/:userId", component: Profile})
     )
   )
 ), document.getElementById('example'));
 
-},{"./components/feed/Feed.jsx":249,"./components/home.jsx":251,"./components/lounge.jsx":252,"./components/session/login.jsx":253,"./components/session/signup.jsx":254,"history":20,"react":240,"react-dom":38,"react-router":58}],248:[function(require,module,exports){
+},{"./components/feed/Feed.jsx":249,"./components/home.jsx":251,"./components/lounge.jsx":252,"./components/profile/Profile.jsx":253,"./components/session/login.jsx":254,"./components/session/signup.jsx":255,"history":20,"react":240,"react-dom":38,"react-router":58}],248:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
@@ -29571,7 +29581,7 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],249:[function(require,module,exports){
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],249:[function(require,module,exports){
 var React = require('react');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var FeedStore = require('../../stores/FeedStore.js');
@@ -29641,7 +29651,7 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../../stores/FeedStore.js":258,"../../utils/WebAPIUtils.js":260,"./CreatePost.jsx":248,"./Post.jsx":250,"react":240}],250:[function(require,module,exports){
+},{"../../stores/FeedStore.js":259,"../../utils/WebAPIUtils.js":262,"./CreatePost.jsx":248,"./Post.jsx":250,"react":240}],250:[function(require,module,exports){
 var React = require('react');
 var moment = require('moment');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
@@ -29655,7 +29665,7 @@ module.exports = React.createClass({displayName: "exports",
         React.createElement("div", {className: "panel-body"}, 
           React.createElement("p", {className: "post-content"}, this.props.post.content), 
           React.createElement("p", {className: "post-metadata"}, 
-            React.createElement("a", {href: "/" + this.props.post.authorId}, this.props.post.displayName), " • ", React.createElement("a", {href: "#"}, moment(this.props.post.createdAt).fromNow())
+            React.createElement("a", {href: "/user/" + this.props.post.authorId}, this.props.post.displayName), " • ", React.createElement("a", {href: "#"}, moment(this.props.post.createdAt).fromNow())
           )
         )
       )
@@ -29663,7 +29673,7 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../../stores/FeedStore.js":258,"../../utils/WebAPIUtils.js":260,"moment":36,"react":240}],251:[function(require,module,exports){
+},{"../../stores/FeedStore.js":259,"../../utils/WebAPIUtils.js":262,"moment":36,"react":240}],251:[function(require,module,exports){
 var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var SessionStore = require('../stores/SessionStore.js');
@@ -29729,7 +29739,7 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../stores/SessionStore.js":259,"../utils/WebAPIUtils.js":260,"./session/login.jsx":253,"./session/signup.jsx":254,"react":240}],252:[function(require,module,exports){
+},{"../stores/SessionStore.js":261,"../utils/WebAPIUtils.js":262,"./session/login.jsx":254,"./session/signup.jsx":255,"react":240}],252:[function(require,module,exports){
 var React = require('react');
 var SessionStore = require('../stores/SessionStore.js');
 var Header = require('./shared/Header.jsx');
@@ -29771,7 +29781,47 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../stores/SessionStore.js":259,"./shared/Header.jsx":255,"react":240}],253:[function(require,module,exports){
+},{"../stores/SessionStore.js":261,"./shared/Header.jsx":256,"react":240}],253:[function(require,module,exports){
+var React = require('react');
+var WebAPIUtils = require('../../utils/WebAPIUtils.js');
+var ProfileStore = require('../../stores/ProfileStore.js');
+
+var getStateFromStores = function() {
+  return {
+    data: ProfileStore.getProfileData(),
+    posts: ProfileStore.getProfilePosts()
+  };
+}
+
+module.exports = React.createClass({displayName: "exports",
+  
+  getInitialState: function() {
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    ProfileStore.addChangeListener(this._onChange);
+    WebAPIUtils.loadProfileData(this.props.params.userId);
+  },
+
+  componentWillUnmount: function() {
+    FeedStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {className: "profile"}, 
+        React.createElement("h1", null, "Profile for ", this.state.data.firstName, " ", this.state.data.lastName)
+      )
+    );
+  }
+});
+
+},{"../../stores/ProfileStore.js":260,"../../utils/WebAPIUtils.js":262,"react":240}],254:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
@@ -29815,7 +29865,7 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],254:[function(require,module,exports){
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],255:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
@@ -29888,7 +29938,7 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],255:[function(require,module,exports){
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],256:[function(require,module,exports){
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var History = require('react-router').History;
@@ -29908,12 +29958,17 @@ module.exports = React.createClass({displayName: "exports",
     SessionActionCreators.logout();
   },
 
+  goToProfile: function() {
+    this.history.pushState(null, '/user/' + this.props.user._id);
+  },
+
   getRightLink: function() {
     if (this.props.isLoggedIn) {
       return(
         React.createElement("li", {className: "dropdown"}, 
           React.createElement("a", {href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, this.props.user.firstName, " ", React.createElement("span", {className: "caret"})), 
           React.createElement("ul", {className: "dropdown-menu"}, 
+            React.createElement("li", null, React.createElement("a", {href: "#", onClick: this.goToProfile}, "My Profile")), 
             React.createElement("li", null, React.createElement("a", {href: "#"}, "Account")), 
             React.createElement("li", null, React.createElement("a", {href: "#", onClick: this.logout}, "Logout"))
           )
@@ -29948,7 +30003,7 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../actions/SessionActionCreators.jsx":246,"react":240,"react-router":58}],256:[function(require,module,exports){
+},{"../../actions/SessionActionCreators.jsx":246,"react":240,"react-router":58}],257:[function(require,module,exports){
 var keyMirror = require('keymirror');
 
 var APIRoot = "http://localhost:3000";
@@ -29963,7 +30018,10 @@ module.exports = {
 
     // Feed
     POSTS:          APIRoot + "/posts/all",
-    CREATE_POST:    APIRoot + "/posts/create"
+    CREATE_POST:    APIRoot + "/posts/create",
+
+    // Profile
+    PROFILE:        APIRoot + "/profile/"
 
   },
 
@@ -29982,12 +30040,12 @@ module.exports = {
 
 }
 
-},{"keymirror":35}],257:[function(require,module,exports){
+},{"keymirror":35}],258:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
 
-},{"flux":3}],258:[function(require,module,exports){
+},{"flux":3}],259:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
@@ -30067,7 +30125,68 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 module.exports = FeedStore;
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257,"../utils/WebAPIUtils.js":260,"events":1,"object-assign":37}],259:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258,"../utils/WebAPIUtils.js":262,"events":1,"object-assign":37}],260:[function(require,module,exports){
+var AppDispatcher = require('../dispatcher/AppDispatcher.js');
+var LoungeConstants = require('../constants/LoungeConstants.js');
+var WebAPIUtils = require('../utils/WebAPIUtils.js');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('object-assign');
+
+var ActionTypes = LoungeConstants.ActionTypes;
+var CHANGE_EVENT = 'change';
+
+var _posts = [];
+var _data = {};
+var _errors = [];
+
+var ProfileStore = assign({}, EventEmitter.prototype, {
+  
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener: function(callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  getProfileData: function() {
+    return _data;
+  },
+
+  getProfilePosts: function() {
+    return _posts;
+  }
+
+});
+
+ProfileStore.dispatchToken = AppDispatcher.register(function(payload) {
+
+  switch(payload.type) {
+
+    case ActionTypes.RECEIVE_PROFILE_DATA:
+      if (payload.json) {
+        _data = payload.json.user;
+        _posts = _posts.concat(payload.json.posts);
+      }
+      if (payload.errors) {
+        _errors = payload.errors;
+      }
+      ProfileStore.emitChange();
+      break;
+
+  }
+
+  return true;
+
+});
+
+module.exports = ProfileStore;
+
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258,"../utils/WebAPIUtils.js":262,"events":1,"object-assign":37}],261:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var EventEmitter = require('events').EventEmitter;
@@ -30147,7 +30266,7 @@ SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 module.exports = SessionStore;
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257,"events":1,"object-assign":37}],260:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":257,"../dispatcher/AppDispatcher.js":258,"events":1,"object-assign":37}],262:[function(require,module,exports){
 var ServerActionCreators = require('../actions/ServerActionCreators.jsx');
 var FeedActionCreators = require('../actions/FeedActionCreators.jsx');
 var LoungeConstants = require('../constants/LoungeConstants.js');
@@ -30229,8 +30348,19 @@ module.exports = {
           ServerActionCreators.receivePosts(json, null);
         }
       })
+  },
+
+  loadProfileData: function(id) {
+    request.get(APIEndpoints.PROFILE + id)
+      .set('Accept', 'application/json')
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveProfileData(json, null);
+        }
+      })
   }
 
 }
 
-},{"../actions/FeedActionCreators.jsx":244,"../actions/ServerActionCreators.jsx":245,"../constants/LoungeConstants.js":256,"superagent":241}]},{},[247]);
+},{"../actions/FeedActionCreators.jsx":244,"../actions/ServerActionCreators.jsx":245,"../constants/LoungeConstants.js":257,"superagent":241}]},{},[247]);

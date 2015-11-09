@@ -19,6 +19,14 @@ module.exports = {
       json: json,
       errors: errors
     })
+  },
+
+  receiveProfileData: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_PROFILE_DATA,
+      json: json,
+      errors: errors
+    })
   }
 
 }

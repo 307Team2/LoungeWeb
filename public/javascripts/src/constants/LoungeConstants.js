@@ -12,7 +12,10 @@ module.exports = {
 
     // Feed
     POSTS:          APIRoot + "/posts/all",
-    CREATE_POST:    APIRoot + "/posts/create"
+    CREATE_POST:    APIRoot + "/posts/create",
+
+    // Profile
+    PROFILE:        APIRoot + "/profile/"
 
   },
 

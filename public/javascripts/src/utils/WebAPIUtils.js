@@ -79,6 +79,17 @@ module.exports = {
           ServerActionCreators.receivePosts(json, null);
         }
       })
+  },
+
+  loadProfileData: function(id) {
+    request.get(APIEndpoints.PROFILE + id)
+      .set('Accept', 'application/json')
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveProfileData(json, null);
+        }
+      })
   }
 
 }
