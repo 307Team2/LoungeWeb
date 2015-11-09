@@ -2,8 +2,6 @@ var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var SessionStore = require('../stores/SessionStore.js');
 
-var LoginForm = require('./session/login.jsx');
-var SignupForm = require('./session/signup.jsx');
 
 var getStateFromStores = function() {
   return {
