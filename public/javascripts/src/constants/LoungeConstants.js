@@ -1,6 +1,7 @@
 var keyMirror = require('keymirror');
 
-var APIRoot = process.env.API_ROOT || "http://localhost:3000";
+var APIRoot = process.env.API_ROOT;
+console.log("API_ROOT: " + process.env.API_ROOT);
 
 var LoungeConstants = {
 

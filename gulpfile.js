@@ -2,6 +2,7 @@ var gulp = require('gulp');
 
 var browserify = require('browserify');
 var reactify = require('reactify');
+var envify = require('envify/custom');
 var source = require('vinyl-source-stream');
 var bower = require('gulp-bower');
 var sass = require('gulp-sass');
@@ -26,6 +27,9 @@ gulp.task('sass', function () {
 gulp.task('js', function(){
   browserify('./public/javascripts/src/app.jsx')
     .transform(reactify)
+    .transform(envify({
+      API_ROOT: process.env.NODE_ENV === 'production' ? 'http://lounge-api.herokuapp.com' : 'http://localhost:3000'
+    }))
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('public/javascripts/build/'));
