@@ -2,7 +2,7 @@ var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
-module.exports = React.createClass({
+var Signup = React.createClass({
 
   mixins: [ History ],
 
@@ -69,3 +69,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = Signup;

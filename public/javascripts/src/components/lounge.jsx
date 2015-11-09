@@ -9,7 +9,7 @@ var getStateFromStores = function() {
   };
 }
 
-module.exports = React.createClass({
+var Lounge = React.createClass({
   
   getInitialState: function() {
     return getStateFromStores();
@@ -38,3 +38,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Lounge;

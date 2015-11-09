@@ -3,14 +3,13 @@ var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-var SessionActionCreators = {
+FeedActionCreators = {
 
-  logout: function() {
+  loadPosts: function() {
     AppDispatcher.dispatch({
-      type: ActionTypes.LOGOUT
+      type: ActionTypes.LOAD_POSTS
     })
   }
-
 }
 
-module.exports = SessionActionCreators;
+module.exports = FeedActionCreators;

@@ -1,10 +1,11 @@
 var ServerActionCreators = require('../actions/ServerActionCreators.jsx');
+var FeedActionCreators = require('../actions/FeedActionCreators.jsx');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var request = require('superagent');
 
 var APIEndpoints = LoungeConstants.APIEndpoints;
 
-module.exports = {
+var WebAPIUtils = {
 
   signup: function(email, firstName, lastName, age, location, organization, jobTitle, password) {
     request.post(APIEndpoints.SIGNUP)
@@ -20,7 +21,9 @@ module.exports = {
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {
-        if (res) {
+        if (error) {
+          console.error(error);
+        } else {
           json = JSON.parse(res.text);
           if (json.error) {
             ServerActionCreators.receiveLogin(null, json.error);
@@ -39,7 +42,9 @@ module.exports = {
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {
-        if (res) {
+        if (error) {
+          console.error(error);
+        } else {
           json = JSON.parse(res.text);
           if (json.error) {
             ServerActionCreators.receiveLogin(null, json.error);
@@ -48,6 +53,34 @@ module.exports = {
           }
         }
       })
+  },
+
+  createPost: function(content) {
+    request.post(APIEndpoints.CREATE_POST)
+      .send({
+        content: content
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        }
+        FeedActionCreators.loadPosts();
+      })
+  },
+
+  loadPosts: function(limit, lastTimestamp) {
+    request.get(APIEndpoints.POSTS + "?limit=" + limit + "&lastTimestamp=" + lastTimestamp)
+      .set('Accept', 'application/json')
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receivePosts(json, null);
+        }
+      })
   }
 
 }
+
+module.exports = WebAPIUtils;

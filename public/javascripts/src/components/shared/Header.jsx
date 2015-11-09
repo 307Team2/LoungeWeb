@@ -3,7 +3,7 @@ var ReactPropTypes = React.PropTypes;
 var History = require('react-router').History;
 var SessionActionCreators = require('../../actions/SessionActionCreators.jsx');
 
-module.exports = React.createClass({
+var Header = React.createClass({
 
   mixins: [ History ],
 
@@ -56,3 +56,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = Header;
