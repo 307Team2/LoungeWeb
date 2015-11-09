@@ -28,7 +28,7 @@ gulp.task('js', function(){
   browserify('./public/javascripts/src/app.jsx')
     .transform(reactify)
     .transform(envify({
-      API_ROOT: process.env.NODE_ENV === 'production' ? 'http://lounge-api.herokuapp.com' : 'http://localhost:3000'
+      API_ROOT: process.env.NODE_ENV === 'production' ? 'http://lounge-.herokuapp.com' : 'http://localhost:3000'
     }))
     .bundle()
     .pipe(source('app.js'))
