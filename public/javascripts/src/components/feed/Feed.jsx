@@ -13,7 +13,7 @@ var getStateFromStores = function() {
   };
 }
 
-module.exports = React.createClass({
+var Feed = React.createClass({
   
   getInitialState: function() {
     return getStateFromStores();
@@ -66,3 +66,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Feed;

@@ -3,7 +3,7 @@ var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
 
-module.exports = React.createClass({
+var CreatePost = React.createClass({
 
   mixins: [ History ],
 
@@ -34,3 +34,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = CreatePost;

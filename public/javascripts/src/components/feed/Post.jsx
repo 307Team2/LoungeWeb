@@ -3,7 +3,7 @@ var moment = require('moment');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var FeedStore = require('../../stores/FeedStore.js');
 
-module.exports = React.createClass({
+var Post = React.createClass({
 
   render: function() {
     return (
@@ -18,3 +18,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Post;

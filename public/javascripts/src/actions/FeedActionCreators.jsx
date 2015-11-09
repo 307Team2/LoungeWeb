@@ -3,7 +3,7 @@ var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-module.exports = {
+FeedActionCreators = {
 
   loadPosts: function() {
     AppDispatcher.dispatch({
@@ -11,3 +11,5 @@ module.exports = {
     })
   }
 }
+
+module.exports = FeedActionCreators;

@@ -2,7 +2,7 @@ var keyMirror = require('keymirror');
 
 var APIRoot = "http://localhost:3000";
 
-module.exports = {
+var LoungeConstants = {
 
   APIEndpoints: {
 
@@ -30,3 +30,5 @@ module.exports = {
   })
 
 }
+
+module.exports = LoungeConstants;

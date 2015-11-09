@@ -5,10 +5,10 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var createHistory = require('history').createHistory;
 
-var Lounge = require('./components/lounge.jsx');
-var Home = require('./components/home.jsx');
-var Signup = require('./components/session/signup.jsx');
-var Login = require('./components/session/login.jsx');
+var Lounge = require('./components/Lounge.jsx');
+var Home = require('./components/Home.jsx');
+var Signup = require('./components/session/Signup.jsx');
+var Login = require('./components/session/Login.jsx');
 var Feed = require('./components/feed/Feed.jsx');
 
 var history = createHistory();

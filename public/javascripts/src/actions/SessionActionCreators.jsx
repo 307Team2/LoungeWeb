@@ -3,7 +3,7 @@ var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-module.exports = {
+var SessionActionCreators = {
 
   logout: function() {
     AppDispatcher.dispatch({
@@ -12,3 +12,5 @@ module.exports = {
   }
 
 }
+
+module.exports = SessionActionCreators;

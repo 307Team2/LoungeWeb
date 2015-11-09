@@ -5,7 +5,7 @@ var request = require('superagent');
 
 var APIEndpoints = LoungeConstants.APIEndpoints;
 
-module.exports = {
+var WebAPIUtils = {
 
   signup: function(email, firstName, lastName, age, location, organization, jobTitle, password) {
     request.post(APIEndpoints.SIGNUP)
@@ -22,7 +22,7 @@ module.exports = {
       .set('Accept', 'application/json')
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         } else {
           json = JSON.parse(res.text);
           if (json.error) {
@@ -43,7 +43,7 @@ module.exports = {
       .set('Accept', 'application/json')
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         } else {
           json = JSON.parse(res.text);
           if (json.error) {
@@ -64,7 +64,7 @@ module.exports = {
       .set('Authorization', sessionStorage.getItem('accessToken'))
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         }
         FeedActionCreators.loadPosts();
       })
@@ -82,3 +82,5 @@ module.exports = {
   }
 
 }
+
+module.exports = WebAPIUtils;

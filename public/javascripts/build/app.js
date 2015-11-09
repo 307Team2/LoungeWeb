@@ -29455,7 +29455,7 @@ var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-module.exports = {
+FeedActionCreators = {
 
   loadPosts: function() {
     AppDispatcher.dispatch({
@@ -29464,20 +29464,22 @@ module.exports = {
   }
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],245:[function(require,module,exports){
+module.exports = FeedActionCreators;
+
+},{"../constants/LoungeConstants.js":258,"../dispatcher/AppDispatcher.js":259}],245:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-module.exports = {
+var ServerActionCreators = {
 
   receiveLogin: function(json, errors) {
     AppDispatcher.dispatch({
       type: ActionTypes.LOGIN_RESPONSE,
       json: json,
       errors: errors
-    })
+    });
   },
 
   receivePosts: function(json, errors) {
@@ -29485,18 +29487,20 @@ module.exports = {
       type: ActionTypes.RECEIVE_POSTS,
       json: json,
       errors: errors
-    })
+    });
   }
 
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],246:[function(require,module,exports){
+module.exports = ServerActionCreators;
+
+},{"../constants/LoungeConstants.js":258,"../dispatcher/AppDispatcher.js":259}],246:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 
-module.exports = {
+var SessionActionCreators = {
 
   logout: function() {
     AppDispatcher.dispatch({
@@ -29506,7 +29510,9 @@ module.exports = {
 
 }
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257}],247:[function(require,module,exports){
+module.exports = SessionActionCreators;
+
+},{"../constants/LoungeConstants.js":258,"../dispatcher/AppDispatcher.js":259}],247:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
@@ -29514,10 +29520,10 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var createHistory = require('history').createHistory;
 
-var Lounge = require('./components/lounge.jsx');
-var Home = require('./components/home.jsx');
-var Signup = require('./components/session/signup.jsx');
-var Login = require('./components/session/login.jsx');
+var Lounge = require('./components/Lounge.jsx');
+var Home = require('./components/Home.jsx');
+var Signup = require('./components/session/Signup.jsx');
+var Login = require('./components/session/Login.jsx');
 var Feed = require('./components/feed/Feed.jsx');
 
 var history = createHistory();
@@ -29533,13 +29539,125 @@ ReactDOM.render((
   )
 ), document.getElementById('example'));
 
-},{"./components/feed/Feed.jsx":249,"./components/home.jsx":251,"./components/lounge.jsx":252,"./components/session/login.jsx":253,"./components/session/signup.jsx":254,"history":20,"react":240,"react-dom":38,"react-router":58}],248:[function(require,module,exports){
+},{"./components/Home.jsx":248,"./components/Lounge.jsx":249,"./components/feed/Feed.jsx":251,"./components/session/Login.jsx":253,"./components/session/Signup.jsx":254,"history":20,"react":240,"react-dom":38,"react-router":58}],248:[function(require,module,exports){
+var React = require('react');
+var WebAPIUtils = require('../utils/WebAPIUtils.js');
+var SessionStore = require('../stores/SessionStore.js');
+
+var LoginForm = require('./session/login.jsx');
+var SignupForm = require('./session/signup.jsx');
+
+var getStateFromStores = function() {
+  return {
+    isLoggedIn: SessionStore.isLoggedIn(),
+    user: SessionStore.getUser()
+  };
+}
+
+var Home = React.createClass({displayName: "Home",
+
+  getInitialState: function() {
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    SessionStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    SessionStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  },
+
+  renderLandingPage: function() {
+    return(
+      React.createElement("div", null, 
+        React.createElement("h1", null, "Welcome to Lounge!"), 
+        React.createElement("a", {className: "btn btn-default", href: "/signup"}, "Sign up"), 
+        React.createElement("a", {className: "btn btn-default", href: "/login"}, "Log in")
+      )
+    );
+  },
+
+  renderHomepage: function() {
+    return(
+      React.createElement("h1", null, "Welcome back ", this.state.user.firstName, " ", this.state.user.lastName, "!")
+    );
+  },
+
+  render: function() {
+    if (this.state.isLoggedIn) {
+      return (
+        React.createElement("div", null, 
+          this.renderHomepage()
+        )
+      );
+    }
+   
+    return (
+      React.createElement("div", null, 
+        this.renderLandingPage()
+      )
+    );
+  }
+});
+
+module.exports = Home;
+
+},{"../stores/SessionStore.js":261,"../utils/WebAPIUtils.js":262,"./session/login.jsx":255,"./session/signup.jsx":256,"react":240}],249:[function(require,module,exports){
+var React = require('react');
+var SessionStore = require('../stores/SessionStore.js');
+var Header = require('./shared/Header.jsx');
+
+var getStateFromStores = function() {
+  return {
+    isLoggedIn: SessionStore.isLoggedIn(),
+    user: SessionStore.getUser()
+  };
+}
+
+var Lounge = React.createClass({displayName: "Lounge",
+  
+  getInitialState: function() {
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    SessionStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    SessionStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {className: "app"}, 
+        React.createElement(Header, {isLoggedIn: this.state.isLoggedIn, user: this.state.user}), 
+        React.createElement("div", {className: "container"}, 
+          this.props.children
+        )
+      )
+    );
+  }
+});
+
+module.exports = Lounge;
+
+},{"../stores/SessionStore.js":261,"./shared/Header.jsx":257,"react":240}],250:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
 
-module.exports = React.createClass({displayName: "exports",
+var CreatePost = React.createClass({displayName: "CreatePost",
 
   mixins: [ History ],
 
@@ -29571,7 +29689,9 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],249:[function(require,module,exports){
+module.exports = CreatePost;
+
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],251:[function(require,module,exports){
 var React = require('react');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var FeedStore = require('../../stores/FeedStore.js');
@@ -29587,7 +29707,7 @@ var getStateFromStores = function() {
   };
 }
 
-module.exports = React.createClass({displayName: "exports",
+var Feed = React.createClass({displayName: "Feed",
   
   getInitialState: function() {
     return getStateFromStores();
@@ -29641,13 +29761,15 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../../stores/FeedStore.js":258,"../../utils/WebAPIUtils.js":260,"./CreatePost.jsx":248,"./Post.jsx":250,"react":240}],250:[function(require,module,exports){
+module.exports = Feed;
+
+},{"../../stores/FeedStore.js":260,"../../utils/WebAPIUtils.js":262,"./CreatePost.jsx":250,"./Post.jsx":252,"react":240}],252:[function(require,module,exports){
 var React = require('react');
 var moment = require('moment');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var FeedStore = require('../../stores/FeedStore.js');
 
-module.exports = React.createClass({displayName: "exports",
+var Post = React.createClass({displayName: "Post",
 
   render: function() {
     return (
@@ -29663,121 +29785,15 @@ module.exports = React.createClass({displayName: "exports",
   }
 });
 
-},{"../../stores/FeedStore.js":258,"../../utils/WebAPIUtils.js":260,"moment":36,"react":240}],251:[function(require,module,exports){
-var React = require('react');
-var WebAPIUtils = require('../utils/WebAPIUtils.js');
-var SessionStore = require('../stores/SessionStore.js');
+module.exports = Post;
 
-var LoginForm = require('./session/login.jsx');
-var SignupForm = require('./session/signup.jsx');
-
-var getStateFromStores = function() {
-  return {
-    isLoggedIn: SessionStore.isLoggedIn(),
-    user: SessionStore.getUser()
-  };
-}
-
-module.exports = React.createClass({displayName: "exports",
-
-  getInitialState: function() {
-    return getStateFromStores();
-  },
-
-  componentDidMount: function() {
-    SessionStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    SessionStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-    this.setState(getStateFromStores());
-  },
-
-  renderLandingPage: function() {
-    return(
-      React.createElement("div", null, 
-        React.createElement("h1", null, "Welcome to Lounge!"), 
-        React.createElement("a", {className: "btn btn-default", href: "/signup"}, "Sign up"), 
-        React.createElement("a", {className: "btn btn-default", href: "/login"}, "Log in")
-      )
-    );
-  },
-
-  renderHomepage: function() {
-    return(
-      React.createElement("h1", null, "Welcome back ", this.state.user.firstName, " ", this.state.user.lastName, "!")
-    );
-  },
-
-  render: function() {
-    if (this.state.isLoggedIn) {
-      return (
-        React.createElement("div", null, 
-          this.renderHomepage()
-        )
-      );
-    }
-   
-    return (
-      React.createElement("div", null, 
-        this.renderLandingPage()
-      )
-    );
-  }
-});
-
-},{"../stores/SessionStore.js":259,"../utils/WebAPIUtils.js":260,"./session/login.jsx":253,"./session/signup.jsx":254,"react":240}],252:[function(require,module,exports){
-var React = require('react');
-var SessionStore = require('../stores/SessionStore.js');
-var Header = require('./shared/Header.jsx');
-
-var getStateFromStores = function() {
-  return {
-    isLoggedIn: SessionStore.isLoggedIn(),
-    user: SessionStore.getUser()
-  };
-}
-
-module.exports = React.createClass({displayName: "exports",
-  
-  getInitialState: function() {
-    return getStateFromStores();
-  },
-
-  componentDidMount: function() {
-    SessionStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    SessionStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-    this.setState(getStateFromStores());
-  },
-
-  render: function() {
-    return (
-      React.createElement("div", {className: "app"}, 
-        React.createElement(Header, {isLoggedIn: this.state.isLoggedIn, user: this.state.user}), 
-        React.createElement("div", {className: "container"}, 
-          this.props.children
-        )
-      )
-    );
-  }
-});
-
-},{"../stores/SessionStore.js":259,"./shared/Header.jsx":255,"react":240}],253:[function(require,module,exports){
+},{"../../stores/FeedStore.js":260,"../../utils/WebAPIUtils.js":262,"moment":36,"react":240}],253:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
 
-module.exports = React.createClass({displayName: "exports",
+var Login = React.createClass({displayName: "Login",
 
   mixins: [ History ],
 
@@ -29815,12 +29831,14 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],254:[function(require,module,exports){
+module.exports = Login;
+
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],254:[function(require,module,exports){
 var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
-module.exports = React.createClass({displayName: "exports",
+var Signup = React.createClass({displayName: "Signup",
 
   mixins: [ History ],
 
@@ -29888,13 +29906,136 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../utils/WebAPIUtils.js":260,"react":240,"react-router":58}],255:[function(require,module,exports){
+module.exports = Signup;
+
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],255:[function(require,module,exports){
+var React = require('react');
+var History = require('react-router').History;
+var WebAPIUtils = require('../../utils/WebAPIUtils.js');
+
+
+var Login = React.createClass({displayName: "Login",
+
+  mixins: [ History ],
+
+  _onSubmit: function(e) {
+    e.preventDefault();
+    var email = this.refs.email.value;
+    var password = this.refs.password.value;
+
+    WebAPIUtils.login(email, password);
+    this.history.pushState(null, '/');
+  },
+
+  render: function() {
+    return(
+      React.createElement("div", {className: "panel panel-default"}, 
+        React.createElement("div", {className: "panel-heading"}, 
+          React.createElement("h3", {className: "panel-title"}, "Login")
+        ), 
+        React.createElement("div", {className: "panel-body"}, 
+          React.createElement("form", {onSubmit: this._onSubmit}, 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "email"}, "Email address"), 
+              React.createElement("input", {type: "email", className: "form-control", id: "email", ref: "email", placeholder: "Email"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "password"}, "Password"), 
+              React.createElement("input", {type: "password", className: "form-control", id: "password", ref: "password", placeholder: "Password"})
+            ), 
+            React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Submit")
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = Login;
+
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],256:[function(require,module,exports){
+var React = require('react');
+var History = require('react-router').History;
+var WebAPIUtils = require('../../utils/WebAPIUtils.js');
+
+var Signup = React.createClass({displayName: "Signup",
+
+  mixins: [ History ],
+
+  _onSubmit: function(e) {
+    e.preventDefault();
+    var email = this.refs.email.value;
+    var firstName = this.refs.firstName.value;
+    var lastName = this.refs.lastName.value;
+    var age = this.refs.age.value;
+    var location = this.refs.location.value;
+    var organization = this.refs.organization.value;
+    var jobTitle = this.refs.jobTitle.value;
+    var password = this.refs.password.value;
+
+    WebAPIUtils.signup(email, firstName, lastName, age, location, organization, jobTitle, password);
+    this.history.pushState(null, '/');
+  },
+
+  render: function() {
+    return(
+      React.createElement("div", {className: "panel panel-default"}, 
+        React.createElement("div", {className: "panel-heading"}, 
+          React.createElement("h3", {className: "panel-title"}, "Sign Up")
+        ), 
+        React.createElement("div", {className: "panel-body"}, 
+          React.createElement("form", {onSubmit: this._onSubmit}, 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-email"}, "email"), 
+              React.createElement("input", {type: "email", className: "form-control", id: "signup-email", ref: "email", placeholder: "email"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-firstName"}, "firstName"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-firstName", ref: "firstName", placeholder: "firstName"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-lastName"}, "lastName"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-lastName", ref: "lastName", placeholder: "lastName"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-age"}, "age"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-age", ref: "age", placeholder: "age"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-location"}, "location"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-location", ref: "location", placeholder: "location"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-organization"}, "organization"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-organization", ref: "organization", placeholder: "organization"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-jobTitle"}, "jobTitle"), 
+              React.createElement("input", {type: "text", className: "form-control", id: "signup-jobTitle", ref: "jobTitle", placeholder: "jobTitle"})
+            ), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("label", {htmlFor: "signup-password"}, "password"), 
+              React.createElement("input", {type: "password", className: "form-control", id: "signup-password", ref: "password", placeholder: "password"})
+            ), 
+            React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Submit")
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = Signup;
+
+},{"../../utils/WebAPIUtils.js":262,"react":240,"react-router":58}],257:[function(require,module,exports){
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var History = require('react-router').History;
 var SessionActionCreators = require('../../actions/SessionActionCreators.jsx');
 
-module.exports = React.createClass({displayName: "exports",
+var Header = React.createClass({displayName: "Header",
 
   mixins: [ History ],
 
@@ -29948,12 +30089,14 @@ module.exports = React.createClass({displayName: "exports",
 
 });
 
-},{"../../actions/SessionActionCreators.jsx":246,"react":240,"react-router":58}],256:[function(require,module,exports){
+module.exports = Header;
+
+},{"../../actions/SessionActionCreators.jsx":246,"react":240,"react-router":58}],258:[function(require,module,exports){
 var keyMirror = require('keymirror');
 
 var APIRoot = "http://localhost:3000";
 
-module.exports = {
+var LoungeConstants = {
 
   APIEndpoints: {
 
@@ -29982,12 +30125,16 @@ module.exports = {
 
 }
 
-},{"keymirror":35}],257:[function(require,module,exports){
+module.exports = LoungeConstants;
+
+},{"keymirror":35}],259:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 
-module.exports = new Dispatcher();
+var AppDispatcher = new Dispatcher();
 
-},{"flux":3}],258:[function(require,module,exports){
+module.exports = AppDispatcher;
+
+},{"flux":3}],260:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
@@ -30067,7 +30214,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 module.exports = FeedStore;
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257,"../utils/WebAPIUtils.js":260,"events":1,"object-assign":37}],259:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":258,"../dispatcher/AppDispatcher.js":259,"../utils/WebAPIUtils.js":262,"events":1,"object-assign":37}],261:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var EventEmitter = require('events').EventEmitter;
@@ -30147,7 +30294,7 @@ SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 module.exports = SessionStore;
 
-},{"../constants/LoungeConstants.js":256,"../dispatcher/AppDispatcher.js":257,"events":1,"object-assign":37}],260:[function(require,module,exports){
+},{"../constants/LoungeConstants.js":258,"../dispatcher/AppDispatcher.js":259,"events":1,"object-assign":37}],262:[function(require,module,exports){
 var ServerActionCreators = require('../actions/ServerActionCreators.jsx');
 var FeedActionCreators = require('../actions/FeedActionCreators.jsx');
 var LoungeConstants = require('../constants/LoungeConstants.js');
@@ -30155,7 +30302,7 @@ var request = require('superagent');
 
 var APIEndpoints = LoungeConstants.APIEndpoints;
 
-module.exports = {
+var WebAPIUtils = {
 
   signup: function(email, firstName, lastName, age, location, organization, jobTitle, password) {
     request.post(APIEndpoints.SIGNUP)
@@ -30172,7 +30319,7 @@ module.exports = {
       .set('Accept', 'application/json')
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         } else {
           json = JSON.parse(res.text);
           if (json.error) {
@@ -30193,7 +30340,7 @@ module.exports = {
       .set('Accept', 'application/json')
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         } else {
           json = JSON.parse(res.text);
           if (json.error) {
@@ -30214,7 +30361,7 @@ module.exports = {
       .set('Authorization', sessionStorage.getItem('accessToken'))
       .end(function(error, res) {
         if (error) {
-          console.log(error);
+          console.error(error);
         }
         FeedActionCreators.loadPosts();
       })
@@ -30233,4 +30380,6 @@ module.exports = {
 
 }
 
-},{"../actions/FeedActionCreators.jsx":244,"../actions/ServerActionCreators.jsx":245,"../constants/LoungeConstants.js":256,"superagent":241}]},{},[247]);
+module.exports = WebAPIUtils;
+
+},{"../actions/FeedActionCreators.jsx":244,"../actions/ServerActionCreators.jsx":245,"../constants/LoungeConstants.js":258,"superagent":241}]},{},[247]);
