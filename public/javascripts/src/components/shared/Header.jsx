@@ -49,6 +49,7 @@ var Header = React.createClass({
     if (this.props.isLoggedIn) {
       return(
         <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
+          <li><Link to={'/profile'}>My Profile</Link></li>
           <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
           <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
         </NavDropdown>

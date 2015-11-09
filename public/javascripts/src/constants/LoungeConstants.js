@@ -16,7 +16,10 @@ var LoungeConstants = {
 
     // Account
     ACCOUNT_DATA:      APIRoot + "/account/data",
-    UPDATE_MEMBERSHIP: APIRoot + "/account/updateMembership"
+    UPDATE_MEMBERSHIP: APIRoot + "/account/updateMembership",
+
+    // Profile
+    PROFILE:        APIRoot + "/profile/"
 
   },
 
