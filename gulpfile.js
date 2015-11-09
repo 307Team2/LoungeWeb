@@ -52,3 +52,4 @@ gulp.task('icons', function() { 
 });
 
 gulp.task('default', ['js', 'sass', 'bower', 'icons', 'watch']);
+gulp.task('build', ['js', 'sass', 'bower', 'icons']);

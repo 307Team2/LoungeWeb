@@ -2,3 +2,4 @@ node_modules
 bower_components
 .DS_Store
 public/javascripts/build/.module-cache
+public/javascripts/build/app.js
