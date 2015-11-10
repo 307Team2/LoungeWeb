@@ -55,7 +55,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
           _isMorePosts = false;
         }
         _posts = _posts.concat(payload.json.posts);
-        _lastTimestamp = _posts[_posts.length - 1].createdAt;
+        _lastTimestamp = _posts[_posts.length - 1].createdAt || Date.now();
       }
       if (payload.errors) {
         _errors = payload.errors;

@@ -1,7 +1,5 @@
 var React = require('react');
 var moment = require('moment');
-var WebAPIUtils = require('../../utils/WebAPIUtils.js');
-var FeedStore = require('../../stores/FeedStore.js');
 
 var Post = React.createClass({
 
