@@ -11,9 +11,9 @@ var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 
 var errorAlert = function(error) {
-	notify.onError({message: error.message})(error); //Error Notification
-	console.log(error.toString());//Prints Error to Console
-	this.emit("end"); //End function
+  notify.onError({message: error.message})(error); //Error Notification
+  console.log(error.toString());//Prints Error to Console
+  this.emit("end"); //End function
 };
 
 // ... variables
@@ -38,14 +38,14 @@ gulp.task('js', function(){
       API_ROOT: process.env.NODE_ENV === 'production' ? 'http://lounge-api.herokuapp.com' : 'http://localhost:3000'
     }))
     .bundle()
-		.on('error', errorAlert)
+    .on('error', errorAlert)
     .pipe(source('app.js'))
     .pipe(gulp.dest('public/javascripts/build/'));
 });
 
 gulp.task('bower', function() { 
   return bower()
-		.on('error', errorAlert)
+    .on('error', errorAlert)
     .pipe(gulp.dest('./bower_components')) 
 });
 
@@ -57,8 +57,8 @@ gulp.task('watch', function() {
 
 gulp.task('icons', function() { 
   return gulp.src('./bower_components/font-awesome/fonts/**.*') 
-		.on('error', errorAlert)
-		.pipe(gulp.dest('./public/fonts')); 
+    .on('error', errorAlert)
+    .pipe(gulp.dest('./public/fonts')); 
 });
 
 gulp.task('default', ['js', 'sass', 'bower', 'icons', 'watch']);
