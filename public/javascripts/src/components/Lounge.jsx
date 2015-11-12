@@ -21,7 +21,9 @@ var Lounge = React.createClass({
   componentDidMount: function() {
     SessionStore.addChangeListener(this._onChange);
     AccountStore.addChangeListener(this._onChange);
-    WebAPIUtils.loadAccountData();
+    if (this.state.isLoggedIn) {
+      WebAPIUtils.loadAccountData();
+    }
   },
 
   componentWillUnmount: function() {
@@ -38,11 +40,8 @@ var Lounge = React.createClass({
   },
 
   loadModals: function() {
-    // Only load modals if the user has been loaded
-    if (Object.keys(this.state.user).length) {
-      return (
-        <MembershipModal user={this.state.user} isSubscribed={this.isSubscribed()} />
-      );
+    if (this.state.isLoggedIn) {
+      return <MembershipModal user={this.state.user} isSubscribed={this.isSubscribed()} />;
     }
   },
 
@@ -55,6 +54,11 @@ var Lounge = React.createClass({
   },
 
   render: function() {
+
+    if (!Object.keys(this.state.user).length && this.state.isLoggedIn) {
+      return this.renderLoadingScreen();
+    }
+
     return (
       <div className="app">
         <Header isLoggedIn={this.state.isLoggedIn} user={this.state.user} />

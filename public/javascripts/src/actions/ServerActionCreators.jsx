@@ -21,6 +21,14 @@ var ServerActionCreators = {
     });
   },
 
+  receiveCreatedPost: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_CREATED_POST,
+      json: json,
+      errors: errors
+    });
+  },
+
   receiveAccountData: function(json, errors) {
     AppDispatcher.dispatch({
       type: ActionTypes.RECEIVE_ACCOUNT_DATA,

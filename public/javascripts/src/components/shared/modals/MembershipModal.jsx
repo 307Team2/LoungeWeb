@@ -1,6 +1,10 @@
 var React = require('react');
 var WebAPIUtils = require('../../../utils/WebAPIUtils.js');
 var Modal = require("react-bootstrap/lib/Modal");
+var Grid = require("react-bootstrap/lib/Grid");
+var Row = require("react-bootstrap/lib/Row");
+var Col = require("react-bootstrap/lib/Col");
+var Panel = require("react-bootstrap/lib/Panel");
 
 var MembershipTier = React.createClass({
 
@@ -10,17 +14,12 @@ var MembershipTier = React.createClass({
   
   render: function() {
     return(
-      <div className="col-sm-4">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">{this.props.name}</h3>
-          </div>
-          <div className="panel-body">
-            <p>{this.props.description}</p>
-            <button className="btn btn-primary" onClick={this.updateTier} disabled={this.props.active}>Switch to {this.props.name}</button>
-          </div>
-        </div>
-      </div>
+      <Col sm={4}>
+        <Panel header={this.props.name}>
+          <p>{this.props.description}</p>
+          <button className="btn btn-primary" onClick={this.updateTier} disabled={this.props.active}>Switch to {this.props.name}</button>
+        </Panel>
+      </Col>
     );
   }
 
@@ -59,11 +58,11 @@ var MembershipModal = React.createClass({
         </Modal.Header>
         <Modal.Body>
           <p>{this.props.user.tier}</p>
-          <div className="row">
+          <Row>
             {this.renderMembershipTier("Bronze", "For the plebs.")}
             {this.renderMembershipTier("Silver", "For the wealthy.")}
             {this.renderMembershipTier("Gold", "For the top 1%.")}
-          </div>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
         </Modal.Footer>

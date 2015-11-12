@@ -1,7 +1,15 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var History = require('react-router').History;
 var SessionActionCreators = require('../../actions/SessionActionCreators.jsx');
+
+var Navbar = require('react-bootstrap/lib/Navbar');
+var NavBrand = require('react-bootstrap/lib/NavBrand');
+var Nav = require('react-bootstrap/lib/Nav');
+var NavItem = require('react-bootstrap/lib/NavItem');
+var NavDropdown = require('react-bootstrap/lib/NavDropdown');
+var MenuItem = require('react-bootstrap/lib/MenuItem');
+var Link = require('react-router').Link;
+var History = require('react-router').History;
 
 var Header = React.createClass({
 
@@ -12,15 +20,27 @@ var Header = React.createClass({
     email: ReactPropTypes.string
   },
 
+  getInitialState: function() {
+    return {
+      isDropdownOpen: false
+    };
+  },
+
+  toggleDropdown: function() {
+    this.setState({
+      isDropdownOpen: !this.state.isDropdownOpen
+    });
+  },
+
   logout: function() {
-    this.history.pushState(null, '/');
+    this.toggleDropdown();
     SessionActionCreators.logout();
   },
-
-  goToAccount: function() {
-    this.history.pushState(null, '/account');
+  
+  goToSignup: function() {
+    this.history.pushState(null, '/signup');
   },
-
+  
   goToHome: function() {
     this.history.pushState(null, '/');
   },
@@ -28,38 +48,22 @@ var Header = React.createClass({
   renderDropdown: function() {
     if (this.props.isLoggedIn) {
       return(
-        <li className="dropdown">
-          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.props.user.firstName} <span className="caret"></span></a>
-          <ul className="dropdown-menu">
-            <li><a href="#" onClick={this.goToAccount}>Account</a></li>
-            <li><a href="#" onClick={this.logout}>Logout</a></li>
-          </ul>
-        </li>
+        <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
+          <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
+          <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
+        </NavDropdown>
       );
     } else {
-      return(<li><a href="/login">Log in</a></li>);
+      return <NavItem componentClass={Link} to={'/signup'}>Sign Up</NavItem>;
     }
   },
 
   render: function() {
     return (
-      <div>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <a className="navbar-brand" href="#" onClick={this.goToHome}>
-                Lounge
-              </a>
-            </div>
-
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul className="nav navbar-nav navbar-right">
-                {this.renderDropdown()}
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
+      <Navbar>
+        <NavBrand><Link to={'/'}>Lounge</Link></NavBrand>
+        <Nav right>{this.renderDropdown()}</Nav>
+      </Navbar>
     );
   }
 
