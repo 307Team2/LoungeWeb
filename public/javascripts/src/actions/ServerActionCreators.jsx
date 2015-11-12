@@ -7,7 +7,7 @@ var ServerActionCreators = {
 
   receiveLogin: function(json, errors) {
     AppDispatcher.dispatch({
-      type: ActionTypes.LOGIN_RESPONSE,
+      type: ActionTypes.RECEIVE_LOGIN,
       json: json,
       errors: errors
     });

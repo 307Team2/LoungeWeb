@@ -2,7 +2,6 @@ var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
-
 var Login = React.createClass({
 
   mixins: [ History ],

@@ -24,7 +24,7 @@ var LoungeConstants = {
 
     // Session
     LOGIN_REQUEST: null,
-    LOGIN_RESPONSE: null,
+    RECEIVE_LOGIN: null,
     LOGOUT: null,
 
     // Feed

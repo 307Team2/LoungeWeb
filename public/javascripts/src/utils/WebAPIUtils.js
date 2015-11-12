@@ -1,6 +1,5 @@
+var SessionActionCreators = require('../actions/SessionActionCreators.jsx');
 var ServerActionCreators = require('../actions/ServerActionCreators.jsx');
-var FeedActionCreators = require('../actions/FeedActionCreators.jsx');
-var AccountActionCreators = require('../actions/AccountActionCreators.jsx');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var request = require('superagent');
 
@@ -67,7 +66,7 @@ var WebAPIUtils = {
         if (error) {
           console.error(error);
         }
-        FeedActionCreators.loadPosts();
+        WebAPIUtils.loadPosts();
       });
   },
 
@@ -106,7 +105,7 @@ var WebAPIUtils = {
         if (error) {
           console.error(error);
         }
-        AccountActionCreators.loadAccountData();
+        WebAPIUtils.loadAccountData();
       });
   }
 

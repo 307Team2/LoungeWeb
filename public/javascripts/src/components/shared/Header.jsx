@@ -13,12 +13,16 @@ var Header = React.createClass({
   },
 
   logout: function() {
-    this.history.pushState(null, '/')
+    this.history.pushState(null, '/');
     SessionActionCreators.logout();
   },
 
   goToAccount: function() {
     this.history.pushState(null, '/account');
+  },
+
+  goToHome: function() {
+    this.history.pushState(null, '/');
   },
 
   renderDropdown: function() {
@@ -43,7 +47,7 @@ var Header = React.createClass({
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
-              <a className="navbar-brand" href="/">
+              <a className="navbar-brand" href="#" onClick={this.goToHome}>
                 Lounge
               </a>
             </div>

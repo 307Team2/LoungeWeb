@@ -19,7 +19,7 @@ gulp.task('sass', function () {
     .src('./sass/base.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write({sourceRoot: '../'}))
     .pipe(autoprefixer(autoprefixerOptions))
     .pipe(gulp.dest('./public/stylesheets/'));
 });

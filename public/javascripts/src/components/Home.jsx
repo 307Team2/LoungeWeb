@@ -1,12 +1,13 @@
 var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var SessionStore = require('../stores/SessionStore.js');
-
+var AccountStore = require('../stores/AccountStore.js');
+var Feed = require('./feed/Feed.jsx');
 
 var getStateFromStores = function() {
   return {
     isLoggedIn: SessionStore.isLoggedIn(),
-    user: SessionStore.getUser()
+    user: AccountStore.getUser()
   };
 }
 
@@ -18,10 +19,12 @@ var Home = React.createClass({
 
   componentDidMount: function() {
     SessionStore.addChangeListener(this._onChange);
+    AccountStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     SessionStore.removeChangeListener(this._onChange);
+    AccountStore.removeChangeListener(this._onChange);
   },
 
   _onChange: function() {
@@ -40,7 +43,17 @@ var Home = React.createClass({
 
   renderHomepage: function() {
     return(
-      <h1>Welcome back {this.state.user.firstName} {this.state.user.lastName}!</h1>
+      <div className="homepage">
+        <h1>Welcome back {this.state.user.firstName} {this.state.user.lastName}!</h1>
+        <div className="row">
+          <div className="col-sm-4">
+
+          </div>
+          <div className="col-sm-8">
+            <Feed/>
+          </div>
+        </div>
+      </div>
     );
   },
 

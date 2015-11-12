@@ -8,7 +8,7 @@ var SessionActionCreators = {
   logout: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.LOGOUT
-    })
+    });
   }
 
 }

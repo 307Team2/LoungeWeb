@@ -1,15 +1,16 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var LoungeConstants = require('../constants/LoungeConstants.js');
+var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
 
-var _accessToken = sessionStorage.getItem('accessToken');
+var _user = {};
 var _errors = [];
 
-var SessionStore = assign({}, EventEmitter.prototype, {
+var AccountStore = assign({}, EventEmitter.prototype, {
   
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -23,43 +24,40 @@ var SessionStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  isLoggedIn: function() {
-    return _accessToken ? true : false;
-  },
-
-  getAccessToken: function() {
-    return _accessToken;
-  },
-
-  getErrors: function() {
-    return _errors;
+  getUser: function() {
+    return _user;
   }
 
 });
 
-SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
+AccountStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(payload.type) {
 
     case ActionTypes.LOGOUT:
-      sessionStorage.removeItem('accessToken');
-      _accessToken = null;
-      SessionStore.emitChange();
-      break;
-
-    case ActionTypes.LOADING:
-      SessionStore.emitChange();
+      _user = {};
+      AccountStore.emitChange();
       break;
 
     case ActionTypes.RECEIVE_LOGIN:
       if (payload.json && payload.json.token) {
-        _accessToken = payload.json.token;
-        sessionStorage.setItem('accessToken', _accessToken);
+        _user = payload.json.user;
+      }
+      AccountStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_ACCOUNT_DATA:
+      if (payload.json) {
+        _user = payload.json.user;
       }
       if (payload.errors) {
         _errors = payload.errors;
       }
-      SessionStore.emitChange();
+      AccountStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_ACCOUNT_DATA:
+      WebAPIUtils.loadAccountData();
       break;
 
   }
@@ -68,4 +66,4 @@ SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = SessionStore;
+module.exports = AccountStore;
