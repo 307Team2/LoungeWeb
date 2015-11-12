@@ -7,7 +7,7 @@ var APIEndpoints = LoungeConstants.APIEndpoints;
 
 var WebAPIUtils = {
 
-  signup: function(email, firstName, lastName, age, location, organization, jobTitle, password) {
+  signup: function(email, firstName, lastName, age, location, organization, jobTitle, password, photoUrl) {
     request.post(APIEndpoints.SIGNUP)
       .send({
         email: email,
@@ -17,7 +17,8 @@ var WebAPIUtils = {
         location: location,
         organization: organization,
         jobTitle: jobTitle,
-        password: password
+        password: password,
+        photoUrl: photoUrl
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {

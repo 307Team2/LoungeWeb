@@ -41,8 +41,9 @@ var Signup = React.createClass({
     var organization = this.refs.organization.value;
     var jobTitle = this.refs.jobTitle.value;
     var password = this.refs.password.value;
+    var photoUrl = this.refs.photoUrl.value;
 
-    WebAPIUtils.signup(email, firstName, lastName, age, location, organization, jobTitle, password);
+    WebAPIUtils.signup(email, firstName, lastName, age, location, organization, jobTitle, password, photoUrl);
     this.history.pushState(null, '/');
   },
 
@@ -57,6 +58,7 @@ var Signup = React.createClass({
           <Input type="text" label="location" id="location" ref="location" onChange={this.handleChange}/>
           <Input type="text" label="organization" id="organization" ref="organization" onChange={this.handleChange}/>
           <Input type="text" label="jobTitle" id="jobTitle" ref="jobTitle" onChange={this.handleChange}/>
+          <Input type="filepicker" id="signup-photoUrl" data-fp-apikey="An5KbulcARvis9mByaUbwz" ref="photoUrl" placeholder="photoUrl" />
           <Input type="password" label="password" id="password" ref="password" onChange={this.handleChange}/>
           <ButtonToolbar>
             <Button bsStyle="primary" componentClass="input" type="submit" value="Submit"></Button>
@@ -66,7 +68,6 @@ var Signup = React.createClass({
       </Panel>
     );
   }
-
 });
 
 module.exports = Signup;
