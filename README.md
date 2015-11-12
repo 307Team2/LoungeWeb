@@ -14,12 +14,16 @@ node app
 ```
 
 ### LoungeWeb
-1. Run gulp compiliation
+1. Install gulp
+```
+npm install -g gulp
+```
+2. Run gulp compiliation
 ```
 gulp
 ```
 
-2. Start the frontend server
+3. Start the frontend server
 ```
 npm start
 ```
