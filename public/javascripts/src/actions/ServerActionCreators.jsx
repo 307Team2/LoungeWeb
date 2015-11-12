@@ -7,7 +7,7 @@ var ServerActionCreators = {
 
   receiveLogin: function(json, errors) {
     AppDispatcher.dispatch({
-      type: ActionTypes.LOGIN_RESPONSE,
+      type: ActionTypes.RECEIVE_LOGIN,
       json: json,
       errors: errors
     });
@@ -16,6 +16,14 @@ var ServerActionCreators = {
   receivePosts: function(json, errors) {
     AppDispatcher.dispatch({
       type: ActionTypes.RECEIVE_POSTS,
+      json: json,
+      errors: errors
+    });
+  },
+
+  receiveAccountData: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_ACCOUNT_DATA,
       json: json,
       errors: errors
     });

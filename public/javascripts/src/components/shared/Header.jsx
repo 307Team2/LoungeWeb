@@ -13,17 +13,25 @@ var Header = React.createClass({
   },
 
   logout: function() {
-    this.history.pushState(null, '/')
+    this.history.pushState(null, '/');
     SessionActionCreators.logout();
   },
 
-  getRightLink: function() {
+  goToAccount: function() {
+    this.history.pushState(null, '/account');
+  },
+
+  goToHome: function() {
+    this.history.pushState(null, '/');
+  },
+
+  renderDropdown: function() {
     if (this.props.isLoggedIn) {
       return(
         <li className="dropdown">
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.props.user.firstName} <span className="caret"></span></a>
           <ul className="dropdown-menu">
-            <li><a href="#">Account</a></li>
+            <li><a href="#" onClick={this.goToAccount}>Account</a></li>
             <li><a href="#" onClick={this.logout}>Logout</a></li>
           </ul>
         </li>
@@ -39,14 +47,14 @@ var Header = React.createClass({
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
-              <a className="navbar-brand" href="/">
+              <a className="navbar-brand" href="#" onClick={this.goToHome}>
                 Lounge
               </a>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav navbar-right">
-                {this.getRightLink()}
+                {this.renderDropdown()}
               </ul>
             </div>
           </div>

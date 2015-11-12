@@ -7,12 +7,16 @@ var LoungeConstants = {
   APIEndpoints: {
 
     // Session
-    LOGIN:          APIRoot + "/account/login",
-    SIGNUP:         APIRoot + "/account/signup",
+    LOGIN:             APIRoot + "/account/login",
+    SIGNUP:            APIRoot + "/account/signup",
 
     // Feed
-    POSTS:          APIRoot + "/posts/all",
-    CREATE_POST:    APIRoot + "/posts/create"
+    POSTS:             APIRoot + "/posts/all",
+    CREATE_POST:       APIRoot + "/posts/create",
+
+    // Account
+    ACCOUNT_DATA:      APIRoot + "/account/data",
+    UPDATE_MEMBERSHIP: APIRoot + "/account/updateMembership"
 
   },
 
@@ -20,12 +24,16 @@ var LoungeConstants = {
 
     // Session
     LOGIN_REQUEST: null,
-    LOGIN_RESPONSE: null,
+    RECEIVE_LOGIN: null,
     LOGOUT: null,
 
     // Feed
     RECEIVE_POSTS: null,
-    LOAD_POSTS: null
+    LOAD_POSTS: null,
+
+    // Account
+    RECEIVE_ACCOUNT_DATA: null,
+    LOAD_ACCOUNT_DATA: null
 
   })
 
