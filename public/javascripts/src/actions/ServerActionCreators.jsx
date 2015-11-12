@@ -19,6 +19,14 @@ var ServerActionCreators = {
       json: json,
       errors: errors
     });
+  },
+
+  receiveAccountData: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_ACCOUNT_DATA,
+      json: json,
+      errors: errors
+    });
   }
 
 }

@@ -1,5 +1,6 @@
 var ServerActionCreators = require('../actions/ServerActionCreators.jsx');
 var FeedActionCreators = require('../actions/FeedActionCreators.jsx');
+var AccountActionCreators = require('../actions/AccountActionCreators.jsx');
 var LoungeConstants = require('../constants/LoungeConstants.js');
 var request = require('superagent');
 
@@ -52,7 +53,7 @@ var WebAPIUtils = {
             ServerActionCreators.receiveLogin(json, null);
           }
         }
-      })
+      });
   },
 
   createPost: function(content) {
@@ -67,7 +68,7 @@ var WebAPIUtils = {
           console.error(error);
         }
         FeedActionCreators.loadPosts();
-      })
+      });
   },
 
   loadPosts: function(limit, lastTimestamp) {
@@ -78,7 +79,35 @@ var WebAPIUtils = {
           json = JSON.parse(res.text);
           ServerActionCreators.receivePosts(json, null);
         }
+      });
+  },
+
+  loadAccountData: function() {
+    request.get(APIEndpoints.ACCOUNT_DATA)
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        }
+        json = JSON.parse(res.text);
+        ServerActionCreators.receiveAccountData(json, null);
+      });
+  },
+
+  updateMembershipTier: function(name) {
+    request.post(APIEndpoints.UPDATE_MEMBERSHIP)
+      .send({
+        tier: name
       })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        }
+        AccountActionCreators.loadAccountData();
+      });
   }
 
 }
