@@ -2,6 +2,11 @@ var React = require('react');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var AccountStore = require('../../stores/AccountStore.js');
 
+var Row = require('react-bootstrap/lib/Row');
+var Col = require('react-bootstrap/lib/Col');
+var Panel = require('react-bootstrap/lib/Panel');
+var Button = require('react-bootstrap/lib/Button');
+
 var MembershipTier = React.createClass({
 
   updateTier: function() {
@@ -10,17 +15,12 @@ var MembershipTier = React.createClass({
   
   render: function() {
     return(
-      <div className="col-sm-4">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">{this.props.name}</h3>
-          </div>
-          <div className="panel-body">
-            <p>{this.props.description}</p>
-            <button className="btn btn-primary" onClick={this.updateTier} disabled={this.props.active}>Switch to {this.props.name}</button>
-          </div>
-        </div>
-      </div>
+      <Col sm={4}>
+        <Panel header={this.props.name}>
+          <p>{this.props.description}</p>
+          <Button bsStyle="primary" onClick={this.updateTier} disabled={this.props.active}>Switch to {this.props.name}</Button>
+        </Panel>
+      </Col>
     );
   }
 
@@ -58,8 +58,7 @@ var Membership = React.createClass({
     } else {
       return(
         <small>
-          Current Tier: {this.props.user.tier}&nbsp;
-          (<a onClick={this.removeTier}>Remove</a>)
+          Current Tier: {this.props.user.tier} (<a onClick={this.removeTier}>Remove</a>)
         </small>
       );
     }
@@ -68,15 +67,12 @@ var Membership = React.createClass({
   render: function() {
     return (
       <div className="membership">
-        <h3>
-          Membership&nbsp;
-          {this.renderCurrentMembership()}
-        </h3>
-        <div className="row">
+        <h3>Membership {this.renderCurrentMembership()}</h3>
+        <Row>
           {this.renderMembershipTier("Bronze", "For the plebs.")}
           {this.renderMembershipTier("Silver", "For the wealthy.")}
           {this.renderMembershipTier("Gold", "For the top 1%.")}
-        </div>
+        </Row>
       </div>
     );
   }

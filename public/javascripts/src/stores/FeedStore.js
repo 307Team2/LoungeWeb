@@ -63,6 +63,16 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
       FeedStore.emitChange();
       break;
 
+    case ActionTypes.RECEIVE_CREATED_POST:
+      if (payload.json) {
+        _posts.unshift(payload.json.post);
+      }
+      if (payload.errors) {
+        _errors = payload.errors;
+      }
+      FeedStore.emitChange();
+      break;
+
     case ActionTypes.LOAD_POSTS:
       _posts = [];
       _lastTimestamp = Date.now();

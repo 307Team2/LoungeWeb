@@ -58,7 +58,6 @@ var Feed = React.createClass({
   render: function() {
     return (
       <div className="feed">
-        <h1>Feed</h1>
         <CreatePost />
         {this.renderPosts()}
         {this.renderLoadMorePosts()}

@@ -65,12 +65,16 @@ var WebAPIUtils = {
       .end(function(error, res) {
         if (error) {
           console.error(error);
+        } else {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveCreatedPost(json, null);
         }
-        WebAPIUtils.loadPosts();
       });
   },
 
   loadPosts: function(limit, lastTimestamp) {
+    if (!limit) limit = 10;
+    if (!lastTimestamp) lastTimestamp = Date.now();
     request.get(APIEndpoints.POSTS + "?limit=" + limit + "&lastTimestamp=" + lastTimestamp)
       .set('Accept', 'application/json')
       .end(function(error, res) {

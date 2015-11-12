@@ -2,7 +2,13 @@ var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var SessionStore = require('../stores/SessionStore.js');
 var AccountStore = require('../stores/AccountStore.js');
+
 var Feed = require('./feed/Feed.jsx');
+var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
+var Button = require('react-bootstrap/lib/Button');
+var Row = require('react-bootstrap/lib/Row');
+var Col = require('react-bootstrap/lib/Col');
+var Link = require('react-router').Link;
 
 var getStateFromStores = function() {
   return {
@@ -31,12 +37,18 @@ var Home = React.createClass({
     this.setState(getStateFromStores());
   },
 
+  navigateTo: function(path) {
+    this.history.pushState(null, path);
+  },
+
   renderLandingPage: function() {
     return(
       <div>
         <h1>Welcome to Lounge!</h1>
-        <a className="btn btn-default" href="/signup">Sign up</a>
-        <a className="btn btn-default" href="/login">Log in</a>
+        <ButtonToolbar>
+          <Button componentClass={Link} to={'/signup'}>Sign Up</Button>
+          <Button componentClass={Link} to={'/login'}>Log In</Button>
+        </ButtonToolbar>
       </div>
     );
   },
@@ -44,15 +56,14 @@ var Home = React.createClass({
   renderHomepage: function() {
     return(
       <div className="homepage">
-        <h1>Welcome back {this.state.user.firstName} {this.state.user.lastName}!</h1>
-        <div className="row">
-          <div className="col-sm-4">
+        <Row>
+          <Col sm={4}>
 
-          </div>
-          <div className="col-sm-8">
+          </Col>
+          <Col sm={8}>
             <Feed/>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     );
   },

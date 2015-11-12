@@ -1,35 +1,39 @@
 var React = require('react');
-var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
+var Panel = require('react-bootstrap/lib/Panel');
+var Input = require('react-bootstrap/lib/Input');
+var ButtonInput = require('react-bootstrap/lib/ButtonInput');
 
 var CreatePost = React.createClass({
 
-  mixins: [ History ],
+  getInitialState: function() {
+    return {
+      content: ''
+    }
+  },
+
+  handleChange: function() {
+    this.setState({
+      content: this.refs.content.getValue()
+    });
+  },
 
   _onSubmit: function(e) {
     e.preventDefault();
-    var content = this.refs.content.value;
-    this.refs.content.value = "";
+    this.refs.content.value = '';
 
-    WebAPIUtils.createPost(content);
+    WebAPIUtils.createPost(this.state.content);
   },
 
   render: function() {
     return(
-      <div className="panel new-post">
-        <div className="panel-heading">
-          <h3 className="panel-title">Create a new post</h3>
-        </div>
-        <div className="panel-body">
-          <form onSubmit={this._onSubmit}>
-            <div className="form-group">
-              <textarea type="text" className="form-control" id="createNewPostContent" ref="content" placeholder="What's on your mind?" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
+      <Panel header="Create a new post">
+        <form onSubmit={this._onSubmit}>
+          <Input type="textarea" ref="content" placeholder="What's on your mind?" onChange={this.handleChange}/>
+          <ButtonInput type="submit" bsStyle="primary" value="Submit" disabled={!this.state.content}/>
+        </form>
+      </Panel>
     );
   }
 

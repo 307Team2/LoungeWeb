@@ -2,9 +2,34 @@ var React = require('react');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
+var Panel = require('react-bootstrap/lib/Panel');
+var Input = require('react-bootstrap/lib/Input');
+var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
+var Button = require('react-bootstrap/lib/Button');
+var Link = require('react-router').Link;
+
 var Signup = React.createClass({
 
   mixins: [ History ],
+
+  getInitialState: function() {
+    return {
+      email: '',
+      firstName: '',
+      lastName: '',
+      age: '',
+      location: '',
+      organization: '',
+      jobTitle: '',
+      password: ''
+    };
+  },
+
+  handleChange: function(e) {
+    var newState = {};
+    newState[e.target.id] = this.refs[e.target.id].getValue();
+    this.setState(newState);
+  },
 
   _onSubmit: function(e) {
     e.preventDefault();
@@ -23,48 +48,22 @@ var Signup = React.createClass({
 
   render: function() {
     return(
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Sign Up</h3>
-        </div>
-        <div className="panel-body">
-          <form onSubmit={this._onSubmit}>
-            <div className="form-group">
-              <label htmlFor="signup-email">email</label>
-              <input type="email" className="form-control" id="signup-email" ref="email" placeholder="email" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-firstName">firstName</label>
-              <input type="text" className="form-control" id="signup-firstName" ref="firstName" placeholder="firstName" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-lastName">lastName</label>
-              <input type="text" className="form-control" id="signup-lastName" ref="lastName" placeholder="lastName" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-age">age</label>
-              <input type="text" className="form-control" id="signup-age" ref="age" placeholder="age" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-location">location</label>
-              <input type="text" className="form-control" id="signup-location" ref="location" placeholder="location" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-organization">organization</label>
-              <input type="text" className="form-control" id="signup-organization" ref="organization" placeholder="organization" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-jobTitle">jobTitle</label>
-              <input type="text" className="form-control" id="signup-jobTitle" ref="jobTitle" placeholder="jobTitle" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="signup-password">password</label>
-              <input type="password" className="form-control" id="signup-password" ref="password" placeholder="password" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
+      <Panel header="Sign Up">
+        <form onSubmit={this._onSubmit}>
+          <Input type="email" label="email" id="email" ref="email" onChange={this.handleChange}/>
+          <Input type="text" label="firstName" id="firstName" ref="firstName" onChange={this.handleChange}/>
+          <Input type="text" label="lastName" id="lastName" ref="lastName" onChange={this.handleChange}/>
+          <Input type="number" label="age" id="age" ref="age" onChange={this.handleChange}/>
+          <Input type="text" label="location" id="location" ref="location" onChange={this.handleChange}/>
+          <Input type="text" label="organization" id="organization" ref="organization" onChange={this.handleChange}/>
+          <Input type="text" label="jobTitle" id="jobTitle" ref="jobTitle" onChange={this.handleChange}/>
+          <Input type="password" label="password" id="password" ref="password" onChange={this.handleChange}/>
+          <ButtonToolbar>
+            <Button bsStyle="primary" componentClass="input" type="submit" value="Submit"></Button>
+            <Button bsStyle="link" componentClass={Link} to={'/login'}>Already have an account?</Button>
+          </ButtonToolbar>
+        </form>
+      </Panel>
     );
   }
 
