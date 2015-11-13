@@ -23,9 +23,9 @@ var autoprefixerOptions = {
 
 gulp.task('sass', function () {
   return gulp
-    .src('./sass/base.scss')
+    .src(['./sass/base.scss', './bower_components/bootstrap-sass/assets/stylesheets/_bootstrap'])
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', errorAlert))
+    .pipe(sass({outputStyle: 'compressed'}).on('error', errorAlert))
     .pipe(sourcemaps.write({sourceRoot: '../'}))
     .pipe(autoprefixer(autoprefixerOptions))
     .pipe(gulp.dest('./public/stylesheets/'));
@@ -61,5 +61,5 @@ gulp.task('icons', function() { 
     .pipe(gulp.dest('./public/fonts')); 
 });
 
-gulp.task('default', ['js', 'sass', 'bower', 'icons', 'watch']);
-gulp.task('build', ['js', 'sass', 'bower', 'icons']);
+gulp.task('build', ['js', 'bower', 'sass', 'icons']);
+gulp.task('default', ['build', 'watch']);

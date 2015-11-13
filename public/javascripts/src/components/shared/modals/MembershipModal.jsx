@@ -49,7 +49,7 @@ var MembershipModal = React.createClass({
 
   render: function() {
     return(
-      <Modal show={!this.props.isSubscribed} onHide={this.closeModal} backdrop="static" animation={false}>
+      <Modal show={!this.props.isSubscribed} onHide={this.closeModal} backdrop="static">
         <Modal.Header>
           <Modal.Title>
             Select a Membership
