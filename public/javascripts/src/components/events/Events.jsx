@@ -1,7 +1,7 @@
 var React = require('react');
 var _ = require('lodash');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
-var EventStore = require('../../stores/EventStore');
+var EventsStore = require('../../stores/EventsStore');
 var AccountStore = require('../../stores/AccountStore');
 var EventsActionCreators = require('../../actions/EventsActionCreators');
 var EventItem = require('./EventItem.jsx');
@@ -13,9 +13,9 @@ var Button = require('react-bootstrap/lib/Button');
 
 var getStateFromStores = function() {
   return {
-    events: EventStore.getAllEvents(),
-    filter: EventStore.getFilter(),
-    createEvent: EventStore.isCreateEvent()
+    events: EventsStore.getAllEvents(),
+    filter: EventsStore.getFilter(),
+    createEvent: EventsStore.isCreateEvent()
   };
 }
 
@@ -25,12 +25,12 @@ var Events = React.createClass({
   },
 
   componentDidMount: function() {
-    EventStore.addChangeListener(this._onChange);
+    EventsStore.addChangeListener(this._onChange);
     WebAPIUtils.loadEvents();
   },
 
   componentWillUnmount: function() {
-    EventStore.removeChangeListener(this._onChange);
+    EventsStore.removeChangeListener(this._onChange);
   },
 
   _onChange: function() {
