@@ -38,8 +38,8 @@ module.exports = React.createClass({
       <div className="profile">
         <Row>
           <Col sm={4}>
-            <Panel header={this.state.data.firstName}>
-              <Image src={this.state.data.photoUrl} rounded />
+            <Panel header={this.state.data.firstName + " " + this.state.data.lastName}>
+              <div><Image src={this.state.data.photoUrl} responsive /></div>
               <div>{this.state.data.age}</div>
               <div>{this.state.data.location}</div>
               <div>{this.state.data.organization}</div>
