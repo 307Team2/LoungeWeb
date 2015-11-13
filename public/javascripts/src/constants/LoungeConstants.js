@@ -21,7 +21,7 @@ var LoungeConstants = {
     CANCEL_MEMBERSHIP: APIRoot + "/membership/cancel",
 
     // Profile
-    PROFILE:        APIRoot + "/profile/"
+    PROFILE:        APIRoot + "/profile/",
 
     // Events
     EVENTS:            APIRoot + "/events/all",
