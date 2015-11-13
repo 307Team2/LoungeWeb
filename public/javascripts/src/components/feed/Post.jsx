@@ -10,7 +10,7 @@ var Post = React.createClass({
     return (
       <Panel>
         <p className="post-content">{this.props.post.content}</p>
-        <p>Submitted by <Link to={"/" + this.props.post.authorId}>{this.props.post.displayName}</Link> {moment(this.props.post.createdAt).fromNow()}</p>
+        <p>Submitted by <Link to={"/user/" + this.props.post.authorId}>{this.props.post.displayName}</Link> {moment(this.props.post.createdAt).fromNow()}</p>
       </Panel>
     );
   }

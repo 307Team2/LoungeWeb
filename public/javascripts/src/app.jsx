@@ -11,6 +11,7 @@ var Signup = require('./components/session/Signup.jsx');
 var Login = require('./components/session/Login.jsx');
 var Feed = require('./components/feed/Feed.jsx');
 var Account = require('./components/account/Account.jsx');
+var Profile = require('./components/profile/Profile.jsx');
 
 var history = createHistory();
 
@@ -22,6 +23,7 @@ ReactDOM.render((
       <Route path='login' component={Login} />
       <Route path='feed' component={Feed} />
       <Route path='account' component={Account} />
+      <Route path='/user/:userId' component={Profile} />
     </Route>
   </Router>
 ), document.getElementById('example'));
