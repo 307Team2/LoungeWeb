@@ -15,6 +15,7 @@
     "envify": "^3.4.0",
     "events": "^1.1.0",
     "express": "~4.12.2",
+    "filepicker-js": "^2.2.1",
     "flux": "^2.1.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",

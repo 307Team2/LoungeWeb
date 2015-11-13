@@ -1,4 +1,5 @@
 var React = require('react');
+var filepicker = require('filepicker-js');
 var History = require('react-router').History;
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 
@@ -21,8 +22,23 @@ var Signup = React.createClass({
       location: '',
       organization: '',
       jobTitle: '',
+      photoUrl: '',
       password: ''
     };
+  },
+
+  componentDidMount: function() {
+    this.refs.filepicker.addEventListener('change', this.handleChangeFileUrl, false);
+  },
+
+  componentWillUnmount: function() {
+    this.refs.filepicker.removeEventListener('change', this.handleChangeFileUrl, false);
+  },
+
+  handleChangeFileUrl: function(e) {
+    this.setState({
+      photoUrl: e.target.value
+    });
   },
 
   handleChange: function(e) {
@@ -33,16 +49,17 @@ var Signup = React.createClass({
 
   _onSubmit: function(e) {
     e.preventDefault();
-    var email = this.refs.email.value;
-    var firstName = this.refs.firstName.value;
-    var lastName = this.refs.lastName.value;
-    var age = this.refs.age.value;
-    var location = this.refs.location.value;
-    var organization = this.refs.organization.value;
-    var jobTitle = this.refs.jobTitle.value;
-    var password = this.refs.password.value;
+    var email = this.state.email;
+    var firstName = this.state.firstName;
+    var lastName = this.state.lastName;
+    var age = this.state.age;
+    var location = this.state.location;
+    var organization = this.state.organization;
+    var jobTitle = this.state.jobTitle;
+    var password = this.state.password;
+    var photoUrl = this.state.photoUrl;
 
-    WebAPIUtils.signup(email, firstName, lastName, age, location, organization, jobTitle, password);
+    WebAPIUtils.signup(email, firstName, lastName, age, location, organization, jobTitle, password, photoUrl);
     this.history.pushState(null, '/');
   },
 
@@ -57,6 +74,9 @@ var Signup = React.createClass({
           <Input type="text" label="location" id="location" ref="location" onChange={this.handleChange}/>
           <Input type="text" label="organization" id="organization" ref="organization" onChange={this.handleChange}/>
           <Input type="text" label="jobTitle" id="jobTitle" ref="jobTitle" onChange={this.handleChange}/>
+          <div className="form-control">
+            <input data-fp-apikey="AsEmxeHJuRNehRzcFoPLkz" ref="filepicker" type="filepicker"/>
+          </div>
           <Input type="password" label="password" id="password" ref="password" onChange={this.handleChange}/>
           <ButtonToolbar>
             <Button bsStyle="primary" componentClass="input" type="submit" value="Submit"></Button>
@@ -66,7 +86,6 @@ var Signup = React.createClass({
       </Panel>
     );
   }
-
 });
 
 module.exports = Signup;
