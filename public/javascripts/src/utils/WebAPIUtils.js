@@ -78,6 +78,7 @@ var WebAPIUtils = {
     if (!lastTimestamp) lastTimestamp = Date.now();
     request.get(APIEndpoints.POSTS + "?limit=" + limit + "&lastTimestamp=" + lastTimestamp)
       .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
       .end(function(error, res) {
         if (res) {
           json = JSON.parse(res.text);
