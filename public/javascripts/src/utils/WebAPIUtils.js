@@ -99,10 +99,38 @@ var WebAPIUtils = {
       });
   },
 
-  updateMembershipTier: function(name) {
+  updateMembershipTier: function(tier) {
     request.post(APIEndpoints.UPDATE_MEMBERSHIP)
       .send({
-        tier: name
+        tier: tier
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        }
+        WebAPIUtils.loadAccountData();
+      });
+  },
+
+  cancelMembershipTier: function() {
+    request.post(APIEndpoints.CANCEL_MEMBERSHIP)
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        }
+        WebAPIUtils.loadAccountData();
+      });
+  },
+
+  createMembershipTier: function(tier, stripeToken) {
+    request.post(APIEndpoints.CREATE_MEMBERSHIP)
+      .send({
+        tier: tier,
+        stripeToken: stripeToken
       })
       .set('Accept', 'application/json')
       .set('Authorization', sessionStorage.getItem('accessToken'))

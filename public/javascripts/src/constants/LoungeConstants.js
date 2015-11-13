@@ -16,7 +16,9 @@ var LoungeConstants = {
 
     // Account
     ACCOUNT_DATA:      APIRoot + "/account/data",
-    UPDATE_MEMBERSHIP: APIRoot + "/account/updateMembership",
+    CREATE_MEMBERSHIP: APIRoot + "/membership/create",
+    UPDATE_MEMBERSHIP: APIRoot + "/membership/update",
+    CANCEL_MEMBERSHIP: APIRoot + "/membership/cancel",
 
     // Profile
     PROFILE:        APIRoot + "/profile/"
@@ -29,6 +31,7 @@ var LoungeConstants = {
     LOGIN_REQUEST: null,
     RECEIVE_LOGIN: null,
     LOGOUT: null,
+    TOGGLE_STRIPE_MODAL: null,
 
     // Feed
     RECEIVE_POSTS: null,

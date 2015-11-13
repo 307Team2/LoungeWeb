@@ -33,7 +33,7 @@ var Membership = React.createClass({
   },
 
   removeTier: function() {
-    this.updateTier(null);
+    WebAPIUtils.cancelMembershipTier();
   },
 
   updateTier: function(name) {

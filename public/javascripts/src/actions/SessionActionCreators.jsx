@@ -9,6 +9,13 @@ var SessionActionCreators = {
     AppDispatcher.dispatch({
       type: ActionTypes.LOGOUT
     });
+  },
+
+  openStripeModal: function(name) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.TOGGLE_STRIPE_MODAL,
+      name: name
+    });
   }
 
 }

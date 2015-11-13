@@ -36,7 +36,7 @@ var MembershipModal = React.createClass({
   },
 
   updateTier: function(name) {
-    WebAPIUtils.updateMembershipTier(name);
+    this.props.openStripeModal(name);
   },
 
   renderMembershipTier: function(name, description) {
@@ -49,7 +49,7 @@ var MembershipModal = React.createClass({
 
   render: function() {
     return(
-      <Modal show={!this.props.isSubscribed} onHide={this.closeModal} backdrop="static">
+      <Modal show={!this.props.isOpen} onHide={this.closeModal} backdrop="static">
         <Modal.Header>
           <Modal.Title>
             Select a Membership
