@@ -2,6 +2,7 @@ var React = require('react');
 var _ = require('lodash');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var EventStore = require('../../stores/EventStore');
+var AccountStore = require('../../stores/AccountStore');
 var EventsActionCreators = require('../../actions/EventsActionCreators');
 var EventItem = require('./EventItem.jsx');
 var EventFilter = require('./EventFilter.jsx');
@@ -69,7 +70,7 @@ var Events = React.createClass({
         <h1>Events</h1>
         <Row className='event-dashboard'>
           <Col sm={9}>
-            <EventFilter />
+            <EventFilter tier={AccountStore.getUser().tier} currentFilter={this.state.filter}/>
           </Col>
           <Col sm={3}>
             {this.getEventCreationButton()}

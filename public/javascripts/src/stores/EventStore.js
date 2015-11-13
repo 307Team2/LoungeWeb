@@ -69,6 +69,11 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
       EventStore.emitChange();
       break;
 
+    case ActionTypes.CHANGE_FILTER:
+      _filter = payload.tier;
+      EventStore.emitChange();
+      break;
+
   }
 
   return true;

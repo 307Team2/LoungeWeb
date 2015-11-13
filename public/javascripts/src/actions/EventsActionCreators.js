@@ -9,6 +9,13 @@ var EventsActionCreators = {
     AppDispatcher.dispatch({
       type: ActionTypes.TOGGLE_CREATE_EVENT
     });
+  },
+
+  changeFilter: function(tier) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CHANGE_FILTER,
+      tier: tier
+    });
   }
 
 }
