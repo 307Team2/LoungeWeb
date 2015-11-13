@@ -2,13 +2,19 @@ var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var SessionStore = require('../stores/SessionStore.js');
 var AccountStore = require('../stores/AccountStore.js');
+var SessionActionCreators = require('../actions/SessionActionCreators.jsx');
+
+var StripeCheckout = require('react-stripe-checkout');
 var Header = require('./shared/Header.jsx');
 var MembershipModal = require('./shared/modals/MembershipModal.jsx');
+var StripeModal = require('./shared/modals/StripeModal.jsx');
 
 var getStateFromStores = function() {
   return {
     isLoggedIn: SessionStore.isLoggedIn(),
-    user: AccountStore.getUser()
+    user: AccountStore.getUser(),
+    isStripeOpen: SessionStore.isStripeOpen(),
+    newTier: SessionStore.getTierName()
   };
 }
 
@@ -39,9 +45,18 @@ var Lounge = React.createClass({
     return this.state.user.tier === "Bronze" || this.state.user.tier === "Silver" || this.state.user.tier === "Gold";
   },
 
+  openStripeModal: function(name) {
+    SessionActionCreators.openStripeModal(name);
+  },
+
   loadModals: function() {
     if (this.state.isLoggedIn) {
-      return <MembershipModal user={this.state.user} isSubscribed={this.isSubscribed()} />;
+      return (
+        <div>
+          <MembershipModal user={this.state.user} isOpen={this.isSubscribed()} openStripeModal={this.openStripeModal} />;
+          <StripeModal user={this.state.user} isOpen={this.state.isStripeOpen} tier={this.state.newTier}/>;
+        </div>
+      );
     }
   },
 

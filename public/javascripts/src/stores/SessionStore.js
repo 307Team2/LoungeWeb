@@ -8,6 +8,8 @@ var CHANGE_EVENT = 'change';
 
 var _accessToken = sessionStorage.getItem('accessToken');
 var _errors = [];
+var _isStripeOpen = false;
+var _tierName = null;
 
 var SessionStore = assign({}, EventEmitter.prototype, {
   
@@ -29,6 +31,14 @@ var SessionStore = assign({}, EventEmitter.prototype, {
 
   getAccessToken: function() {
     return _accessToken;
+  },
+
+  isStripeOpen: function() {
+    return _isStripeOpen;
+  },
+
+  getTierName: function() {
+    return _tierName;
   },
 
   getErrors: function() {
@@ -61,6 +71,13 @@ SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
       }
       SessionStore.emitChange();
       break;
+
+    case ActionTypes.TOGGLE_STRIPE_MODAL:
+      _tierName = payload.name;
+      _isStripeOpen = !_isStripeOpen;
+      SessionStore.emitChange();
+      break;
+
 
   }
 
