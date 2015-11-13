@@ -21,7 +21,11 @@ var LoungeConstants = {
     CANCEL_MEMBERSHIP: APIRoot + "/membership/cancel",
 
     // Profile
-    PROFILE:        APIRoot + "/profile/"
+    PROFILE:        APIRoot + "/profile/",
+
+    // Events
+    EVENTS:            APIRoot + "/events/all",
+    CREATE_EVENT:      APIRoot + "/events/create"
 
   },
 
@@ -39,7 +43,12 @@ var LoungeConstants = {
 
     // Account
     RECEIVE_ACCOUNT_DATA: null,
-    LOAD_ACCOUNT_DATA: null
+    LOAD_ACCOUNT_DATA: null,
+
+    // Events
+    RECEIVE_EVENTS: null,
+    RECEIVE_CREATED_EVENT: null,
+    TOGGLE_CREATE_EVENT: null
 
   })
 

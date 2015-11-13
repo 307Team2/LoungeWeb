@@ -1,0 +1,58 @@
+.events {
+  max-width: 40em;
+  margin: 0 auto;
+
+  .event-dashboard {
+
+    margin-bottom: 15px;
+    .btn-primary {
+      width: 100%;
+    }
+  }
+
+  .create-event {
+    margin-bottom: 15px;
+  }
+
+  ul {
+    padding-left: 0;
+  }
+
+  .event-item {
+    list-style: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    padding: 5px;
+
+    .event-name {
+      color: #333;
+      &:hover {
+        text-decoration: none;
+        color: #337ab7;
+      }
+      h3 {
+        margin-top: 10px;
+      }
+    }
+
+    .event-rsvp {
+      margin-bottom: 10px;
+    }
+
+    .event-date {
+      padding-left: 20px;
+      text-align: center;
+
+      .month {
+        margin-bottom: 0;
+        font-size: 1.5em;
+      }
+
+      .date {
+        margin-top: 3px;
+        font-size: 2.5em;
+      }
+    }
+  }
+}
