@@ -37,6 +37,14 @@ var ServerActionCreators = {
     });
   },
 
+  receiveAccountDataAndCloseStripe: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_ACCOUNT_DATA_AND_CLOSE_STRIPE,
+      json: json,
+      errors: errors
+    });
+  },
+
   receiveProfileData: function(json, errors) {
     AppDispatcher.dispatch({
       type: ActionTypes.RECEIVE_PROFILE_DATA,

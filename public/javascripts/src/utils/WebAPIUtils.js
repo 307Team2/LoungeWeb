@@ -87,7 +87,7 @@ var WebAPIUtils = {
       });
   },
 
-  loadAccountData: function() {
+  loadAccountData: function(closeStripeModal) {
     request.get(APIEndpoints.ACCOUNT_DATA)
       .set('Accept', 'application/json')
       .set('Authorization', sessionStorage.getItem('accessToken'))
@@ -96,7 +96,11 @@ var WebAPIUtils = {
           console.error(error);
         }
         json = JSON.parse(res.text);
-        ServerActionCreators.receiveAccountData(json, null);
+        if (closeStripeModal) {
+          ServerActionCreators.receiveAccountDataAndCloseStripe(json, null);
+        } else {
+          ServerActionCreators.receiveAccountData(json, null);
+        }
       });
   },
 
@@ -139,7 +143,7 @@ var WebAPIUtils = {
         if (error) {
           console.error(error);
         }
-        WebAPIUtils.loadAccountData();
+        WebAPIUtils.loadAccountData(true);
       });
   },
 

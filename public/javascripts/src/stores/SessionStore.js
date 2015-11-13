@@ -72,8 +72,11 @@ SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
       SessionStore.emitChange();
       break;
 
+    case ActionTypes.RECEIVE_ACCOUNT_DATA_AND_CLOSE_STRIPE:
     case ActionTypes.TOGGLE_STRIPE_MODAL:
-      _tierName = payload.name;
+      if (payload.name) {
+        _tierName = payload.name;
+      }
       _isStripeOpen = !_isStripeOpen;
       SessionStore.emitChange();
       break;

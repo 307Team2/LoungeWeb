@@ -45,6 +45,7 @@ var LoungeConstants = {
     // Account
     RECEIVE_ACCOUNT_DATA: null,
     LOAD_ACCOUNT_DATA: null,
+    RECEIVE_ACCOUNT_DATA_AND_CLOSE_STRIPE: null,
 
     // Events
     RECEIVE_EVENTS: null,

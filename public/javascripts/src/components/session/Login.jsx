@@ -48,7 +48,7 @@ var Login = React.createClass({
           <Input type="password" label="Password" ref="password" onChange={this.handlePasswordChange}/>
           <ButtonToolbar>
             <Button bsStyle="primary" componentClass="input" type="submit" value="Submit"></Button>
-            <Button bsStyle="link" componentClass={Link} to={'/signup'}>Don't have an account?</Button>
+            <Button bsStyle="link" href='/signup'>Don't have an account?</Button>
           </ButtonToolbar>
         </form>
       </Panel>

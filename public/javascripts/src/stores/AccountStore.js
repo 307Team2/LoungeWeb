@@ -46,6 +46,7 @@ AccountStore.dispatchToken = AppDispatcher.register(function(payload) {
       AccountStore.emitChange();
       break;
 
+    case ActionTypes.RECEIVE_ACCOUNT_DATA_AND_CLOSE_STRIPE:
     case ActionTypes.RECEIVE_ACCOUNT_DATA:
       if (payload.json) {
         _user = payload.json.user;
