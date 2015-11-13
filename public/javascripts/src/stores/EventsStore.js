@@ -12,7 +12,7 @@ var _errors = [];
 var _filter = null; // TODO: fetch tier?
 var _createEvent = false;
 
-var EventStore = assign({}, EventEmitter.prototype, {
+var EventsStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -40,7 +40,7 @@ var EventStore = assign({}, EventEmitter.prototype, {
 
 });
 
-EventStore.dispatchToken = AppDispatcher.register(function(payload) {
+EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(payload.type) {
 
@@ -51,7 +51,7 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
       if (payload.errors) {
         _errors = payload.errors;
       }
-      EventStore.emitChange();
+      EventsStore.emitChange();
       break;
 
     case ActionTypes.RECEIVE_CREATED_EVENT:
@@ -61,17 +61,17 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
       if (payload.errors) {
         _errors = payload.errors;
       }
-      EventStore.emitChange();
+      EventsStore.emitChange();
       break;
 
     case ActionTypes.TOGGLE_CREATE_EVENT:
       _createEvent = !_createEvent;
-      EventStore.emitChange();
+      EventsStore.emitChange();
       break;
 
     case ActionTypes.CHANGE_FILTER:
       _filter = payload.tier;
-      EventStore.emitChange();
+      EventsStore.emitChange();
       break;
 
   }
@@ -80,4 +80,4 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = EventStore;
+module.exports = EventsStore;

@@ -155,6 +155,19 @@ var WebAPIUtils = {
       });
   },
 
+  loadEvent: function(eventId) {
+    console.log(eventId);
+    request.get(APIEndpoints.EVENTS_BASE + eventId)
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveEvent(json, null);
+        }
+      });
+  },
+
   createEvent: function(title, description, startDate) {
     request.post(APIEndpoints.CREATE_EVENT)
       .send({
@@ -170,6 +183,23 @@ var WebAPIUtils = {
         } else {
           json = JSON.parse(res.text);
           ServerActionCreators.receiveCreatedEvent(json, null);
+        }
+      });
+  },
+
+  rsvpToEvent: function(eventId, rsvp) {
+    request.post(APIEndpoints.EVENTS_BASE + eventId + "/rsvp")
+      .send({
+        rsvp: rsvp
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        } else {
+          json = JSON.parse(res.text);
+          WebAPIUtils.loadEvents();          
         }
       });
   },
