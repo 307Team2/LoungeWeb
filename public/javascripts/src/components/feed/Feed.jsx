@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var WebAPIUtils = require('../../utils/WebAPIUtils.js');
 var FeedStore = require('../../stores/FeedStore.js');
 var Post = require('./Post.jsx');
@@ -14,7 +15,7 @@ var getStateFromStores = function() {
 }
 
 var Feed = React.createClass({
-  
+
   getInitialState: function() {
     return getStateFromStores();
   },
@@ -22,10 +23,12 @@ var Feed = React.createClass({
   componentDidMount: function() {
     FeedStore.addChangeListener(this._onChange);
     WebAPIUtils.loadPosts(this.state.limit, this.state.lastTimestamp);
+    window.addEventListener("scroll", this.handleScroll);
   },
 
   componentWillUnmount: function() {
     FeedStore.removeChangeListener(this._onChange);
+    window.removeEventListener("scroll", this.handleScroll);
   },
 
   _onChange: function() {
@@ -47,6 +50,13 @@ var Feed = React.createClass({
     );
   },
 
+  handleScroll: function(e) {
+    // TODO: Find an npm module or something. This is so jank.
+    if (e.target.scrollingElement.scrollHeight - e.target.scrollingElement.scrollTop === e.target.scrollingElement.parentNode.clientHeight) {
+      this.loadMorePosts();
+    }
+  },
+
   renderLoadMorePosts: function() {
     if (this.state.isMorePosts) {
       return(<button className="btn btn-default" onClick={this.loadMorePosts}>Load more posts</button>);
@@ -60,7 +70,6 @@ var Feed = React.createClass({
       <div className="feed">
         <CreatePost />
         {this.renderPosts()}
-        {this.renderLoadMorePosts()}
       </div>
     );
   }

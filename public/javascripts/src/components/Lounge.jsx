@@ -19,7 +19,7 @@ var getStateFromStores = function() {
 }
 
 var Lounge = React.createClass({
-  
+
   getInitialState: function() {
     return getStateFromStores();
   },
@@ -53,8 +53,8 @@ var Lounge = React.createClass({
     if (this.state.isLoggedIn) {
       return (
         <div>
-          <MembershipModal user={this.state.user} isOpen={this.isSubscribed()} openStripeModal={this.openStripeModal} />;
-          <StripeModal user={this.state.user} isOpen={this.state.isStripeOpen} tier={this.state.newTier}/>;
+          <MembershipModal user={this.state.user} isOpen={this.isSubscribed()} openStripeModal={this.openStripeModal} />
+          <StripeModal user={this.state.user} isOpen={this.state.isStripeOpen} tier={this.state.newTier}/>
         </div>
       );
     }
