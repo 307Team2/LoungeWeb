@@ -73,12 +73,6 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
       FeedStore.emitChange();
       break;
 
-    case ActionTypes.LOAD_POSTS:
-      _posts = [];
-      _lastTimestamp = Date.now();
-      WebAPIUtils.loadPosts(_limit, _lastTimestamp);
-      break;
-
   }
 
   return true;

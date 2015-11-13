@@ -32,7 +32,7 @@ var LoungeConstants = {
 
     // Feed
     RECEIVE_POSTS: null,
-    LOAD_POSTS: null,
+    RECEIVE_CREATED_POST: null,
 
     // Account
     RECEIVE_ACCOUNT_DATA: null,

@@ -43201,7 +43201,7 @@ module.exports = React.createClass({displayName: "exports",
   },
 
   componentWillUnmount: function() {
-    FeedStore.removeChangeListener(this._onChange);
+    ProfileStore.removeChangeListener(this._onChange);
   },
 
   _onChange: function() {
@@ -43411,20 +43411,12 @@ var Header = React.createClass({displayName: "Header",
     this.toggleDropdown();
     SessionActionCreators.logout();
   },
-  
-  goToSignup: function() {
-    this.history.pushState(null, '/signup');
-  },
-  
-  goToHome: function() {
-    this.history.pushState(null, '/');
-  },
 
   renderDropdown: function() {
     if (this.props.isLoggedIn) {
       return(
         React.createElement(NavDropdown, {title: this.props.user.firstName, id: "collapsible-navbar-dropdown", open: this.state.isDropdownOpen, onToggle: this.toggleDropdown}, 
-          React.createElement("li", null, React.createElement(Link, {to: '/profile'}, "My Profile")), 
+          React.createElement("li", null, React.createElement(Link, {to: '/user/'+this.props.user._id, onClick: this.toggleDropdown}, "My Profile")), 
           React.createElement("li", null, React.createElement(Link, {to: '/account', onClick: this.toggleDropdown}, "Account")), 
           React.createElement("li", null, React.createElement(Link, {to: '/', onClick: this.logout}, "Logout"))
         )
@@ -43558,7 +43550,7 @@ var LoungeConstants = {
 
     // Feed
     RECEIVE_POSTS: null,
-    LOAD_POSTS: null,
+    RECEIVE_CREATED_POST: null,
 
     // Account
     RECEIVE_ACCOUNT_DATA: null,
@@ -43722,12 +43714,6 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
         _errors = payload.errors;
       }
       FeedStore.emitChange();
-      break;
-
-    case ActionTypes.LOAD_POSTS:
-      _posts = [];
-      _lastTimestamp = Date.now();
-      WebAPIUtils.loadPosts(_limit, _lastTimestamp);
       break;
 
   }

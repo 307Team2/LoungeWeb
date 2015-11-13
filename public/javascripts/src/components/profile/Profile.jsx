@@ -21,7 +21,7 @@ module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    FeedStore.removeChangeListener(this._onChange);
+    ProfileStore.removeChangeListener(this._onChange);
   },
 
   _onChange: function() {
