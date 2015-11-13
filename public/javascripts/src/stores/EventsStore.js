@@ -61,6 +61,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       if (payload.errors) {
         _errors = payload.errors;
       }
+      _createEvent = false;
       EventsStore.emitChange();
       break;
 

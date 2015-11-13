@@ -19,6 +19,9 @@ var CreateEvent = React.createClass({
     var title = this.state.title;
     var description = this.state.description;
     var startDate = this.state.startDate;
+    this.refs.title.value = '';
+    this.refs.startDate.value = null;
+    this.refs.description.value = '';
 
     WebAPIUtils.createEvent(title, description, startDate);
   },
