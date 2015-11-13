@@ -37,17 +37,20 @@ var Header = React.createClass({
     SessionActionCreators.logout();
   },
 
-  renderDropdown: function() {
+  getNavRight: function() {
     if (this.props.isLoggedIn) {
       return(
-        <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
-          <li><Link to={'/user/'+this.props.user._id} onClick={this.toggleDropdown}>My Profile</Link></li>
-          <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
-          <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
-        </NavDropdown>
+        <Nav right>
+          <li><Link to={'/events'}>Events</Link></li>
+          <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
+            <li><Link to={'/user/'+this.props.user._id} onClick={this.toggleDropdown}>My Profile</Link></li>
+            <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
+            <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
+          </NavDropdown>
+        </Nav>
       );
     } else {
-      return <NavItem href='/signup'>Sign Up</NavItem>;
+      return <Nav right><NavItem href='/signup'>Sign Up</NavItem></Nav>;
     }
   },
 
@@ -55,7 +58,7 @@ var Header = React.createClass({
     return (
       <Navbar>
         <NavBrand><Link to={'/'}>Lounge</Link></NavBrand>
-        <Nav right>{this.renderDropdown()}</Nav>
+        {this.getNavRight()}
       </Navbar>
     );
   }
