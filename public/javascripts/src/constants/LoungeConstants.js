@@ -23,6 +23,10 @@ var LoungeConstants = {
     // Profile
     PROFILE:        APIRoot + "/profile/"
 
+    // Events
+    EVENTS:            APIRoot + "/events/all",
+    CREATE_EVENT:      APIRoot + "/events/create"
+
   },
 
   ActionTypes: keyMirror({
@@ -39,7 +43,12 @@ var LoungeConstants = {
 
     // Account
     RECEIVE_ACCOUNT_DATA: null,
-    LOAD_ACCOUNT_DATA: null
+    LOAD_ACCOUNT_DATA: null,
+
+    // Events
+    RECEIVE_EVENTS: null,
+    RECEIVE_CREATED_EVENT: null,
+    TOGGLE_CREATE_EVENT: null
 
   })
 

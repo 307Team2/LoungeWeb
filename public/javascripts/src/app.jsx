@@ -13,7 +13,7 @@ var Feed = require('./components/feed/Feed.jsx');
 var Account = require('./components/account/Account.jsx');
 var Profile = require('./components/profile/Profile.jsx');
 var Events = require('./components/events/Events.jsx');
-var Events = require('./components/events/EventDetail.jsx');
+var EventDetail = require('./components/events/EventDetail.jsx');
 
 var history = createHistory();
 

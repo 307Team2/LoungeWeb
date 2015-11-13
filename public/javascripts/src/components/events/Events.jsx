@@ -1,48 +1,56 @@
 var React = require('react');
 var _ = require('lodash');
+var WebAPIUtils = require('../../utils/WebAPIUtils.js');
+var EventStore = require('../../stores/EventStore');
+var EventsActionCreators = require('../../actions/EventsActionCreators');
 var EventItem = require('./EventItem.jsx');
 var EventFilter = require('./EventFilter.jsx');
+var CreateEvent = require('./CreateEvent.jsx');
 var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
-var ButtonInput = require('react-bootstrap/lib/ButtonInput');
+var Button = require('react-bootstrap/lib/Button');
 
-var realFakeEvents = [
-  {
-    name: 'take a nap and DO WHATEVER YOU WANT JUST LEAVE ME ALONE OKAY',
-    date: Date.now(),
-    tier: 'silver',
-    desc: 'this event is trash'
-  },
-  {
-    name: 'Get together and have a good cry',
-    date: Date.now(),
-    tier: 'gold',
-    desc: 'Lets all come together and have a good cry; because we all deserve it. Invite a friend who you know deserves a good cry'
-  },
-  {
-    name: 'National Fuckb0i Day',
-    date: Date.now(),
-    tier: 'bronze',
-    desc: 'Everyday is National Fuckboy Day where fuckboys roam in every aspect of your life unwarranted, but lets celebrate their awfulness on this particular day.'
-  },
-  {
-    name: 'The day i get my runescape back',
-    date: Date.now(),
-    tier: 'silver',
-    desc: 'guuyz get around it party when its unbanned'
-  }
-];
+var getStateFromStores = function() {
+  return {
+    events: EventStore.getAllEvents(),
+    filter: EventStore.getFilter(),
+    createEvent: EventStore.isCreateEvent()
+  };
+}
 
 var Events = React.createClass({
   getInitialState: function() {
-    return {
-      filter: null,
-      createEvent: false
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    EventStore.addChangeListener(this._onChange);
+    WebAPIUtils.loadEvents();
+  },
+
+  componentWillUnmount: function() {
+    EventStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  },
+
+  getEventCreation: function() {
+    if (this.state.createEvent) {
+      return <CreateEvent handleCancel={this.toggleCreateEvent}/>;
     }
   },
+
+  getEventCreationButton: function() {
+    if (!this.state.createEvent) {
+      return <Button bsStyle="primary" onClick={this.toggleCreateEvent}>Create Event</Button>;
+    }
+  },
+
   getEvents: function() {
     var self = this;
-    return _.map(realFakeEvents, function(event, i) {
+    return _.map(this.state.events, function(event, i) {
       if (!self.state.filter || event.tier === self.state.filter) {
         return (
           <EventItem event={event} key={i} />
@@ -50,6 +58,11 @@ var Events = React.createClass({
       }
     });
   },
+
+  toggleCreateEvent: function() {
+    EventsActionCreators.toggleCreateEvent();
+  },
+
   render: function() {
     return (
       <div className='events'>
@@ -59,15 +72,17 @@ var Events = React.createClass({
             <EventFilter />
           </Col>
           <Col sm={3}>
-            <ButtonInput type="submit" bsStyle="primary" value="Create Event" />
+            {this.getEventCreationButton()}
           </Col>
         </Row>
+        {this.getEventCreation()}
         <ul>
           {this.getEvents()}
         </ul>
       </div>
     );
   }
+
 });
 
 module.exports = Events;

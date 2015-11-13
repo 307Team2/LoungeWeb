@@ -142,6 +142,37 @@ var WebAPIUtils = {
       });
   },
 
+  loadEvents: function() {
+    request.get(APIEndpoints.EVENTS)
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveEvents(json, null);
+        }
+      });
+  },
+
+  createEvent: function(title, description, startDate) {
+    request.post(APIEndpoints.CREATE_EVENT)
+      .send({
+        title: title,
+        description: description,
+        startDate: startDate
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        } else {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveCreatedEvent(json, null);
+        }
+      });
+  },
+
   loadProfileData: function(id) {
     request.get(APIEndpoints.PROFILE + id)
       .set('Accept', 'application/json')

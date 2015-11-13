@@ -1,14 +1,23 @@
 .events {
   max-width: 40em;
   margin: 0 auto;
+
   .event-dashboard {
+
+    margin-bottom: 15px;
     .btn-primary {
       width: 100%;
     }
   }
+
+  .create-event {
+    margin-bottom: 15px;
+  }
+
   ul {
     padding-left: 0;
   }
+
   .event-item {
     list-style: none;
     border-radius: 5px;
@@ -17,7 +26,14 @@
     padding: 5px;
 
     .event-name {
-      margin-top: 10px;
+      color: #333;
+      &:hover {
+        text-decoration: none;
+        color: #337ab7;
+      }
+      h3 {
+        margin-top: 10px;
+      }
     }
 
     .event-rsvp {

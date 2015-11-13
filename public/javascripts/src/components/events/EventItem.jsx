@@ -15,12 +15,12 @@ var EventItem = React.createClass({
         <Row>
           <Col sm={2}>
             <div className='event-date'>
-              <h5 className='month'>{moment(this.props.event.date).format('MMM')}</h5>
-              <h3 className='date'>{moment(this.props.event.date).format('DD')}</h3>
+              <h5 className='month'>{moment(this.props.event.startDate).format('MMM')}</h5>
+              <h3 className='date'>{moment(this.props.event.startDate).format('DD')}</h3>
             </div>
           </Col>
           <Col sm={10}>
-            <Link to={'/events/' + this.props.event._id}><h3 className='event-name'>{ellipsize(this.props.event.name, 33)}</h3></Link>
+            <Link className='event-name' to={'/events/' + this.props.event._id}><h3>{ellipsize(this.props.event.title, 33)}</h3></Link>
             <ButtonGroup className='event-rsvp'>
               <Button>Going</Button>
               <Button>Maybe</Button>
