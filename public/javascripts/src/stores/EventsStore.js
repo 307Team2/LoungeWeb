@@ -7,10 +7,12 @@ var assign = require('object-assign');
 var ActionTypes = LoungeConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
 
-var _event = null;
+var _events = [];
 var _errors = [];
+var _filter = null; // TODO: fetch tier?
+var _createEvent = false;
 
-var EventStore = assign({}, EventEmitter.prototype, {
+var EventsStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -24,24 +26,52 @@ var EventStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getEvent: function() {
-    return _event;
+  getAllEvents: function() {
+    return _events;
+  },
+
+  getFilter: function() {
+    return _filter;
+  },
+
+  isCreateEvent: function() {
+    return _createEvent;
   }
 
 });
 
-EventStore.dispatchToken = AppDispatcher.register(function(payload) {
+EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(payload.type) {
 
-    case ActionTypes.RECEIVE_EVENT:
+    case ActionTypes.RECEIVE_EVENTS:
       if (payload.json) {
-        _event = payload.json.event;
+        _events = payload.json.events;
       }
       if (payload.errors) {
         _errors = payload.errors;
       }
-      EventStore.emitChange();
+      EventsStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_CREATED_EVENT:
+      if (payload.json) {
+        _events.unshift(payload.json.event);
+      }
+      if (payload.errors) {
+        _errors = payload.errors;
+      }
+      EventsStore.emitChange();
+      break;
+
+    case ActionTypes.TOGGLE_CREATE_EVENT:
+      _createEvent = !_createEvent;
+      EventsStore.emitChange();
+      break;
+
+    case ActionTypes.CHANGE_FILTER:
+      _filter = payload.tier;
+      EventsStore.emitChange();
       break;
 
   }
@@ -50,4 +80,4 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = EventStore;
+module.exports = EventsStore;

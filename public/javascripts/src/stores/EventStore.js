@@ -7,10 +7,10 @@ var assign = require('object-assign');
 var ActionTypes = LoungeConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
 
-var _event;
+var _event = null;
 var _errors = [];
 
-var EventDetailStore = assign({}, EventEmitter.prototype, {
+var EventStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -24,16 +24,8 @@ var EventDetailStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getAllEvents: function() {
-    return _events;
-  },
-
-  getFilter: function() {
-    return _filter;
-  },
-
-  isCreateEvent: function() {
-    return _createEvent;
+  getEvent: function() {
+    return _event;
   }
 
 });
@@ -42,9 +34,9 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(payload.type) {
 
-    case ActionTypes.RECEIVE_EVENT_DETAIL:
+    case ActionTypes.RECEIVE_EVENT:
       if (payload.json) {
-        _events = payload.json.events;
+        _event = payload.json.event;
       }
       if (payload.errors) {
         _errors = payload.errors;
@@ -58,4 +50,4 @@ EventStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = EventDetailStore;
+module.exports = EventStore;
