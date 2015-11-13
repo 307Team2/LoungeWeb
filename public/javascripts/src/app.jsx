@@ -13,7 +13,7 @@ var Feed = require('./components/feed/Feed.jsx');
 var Account = require('./components/account/Account.jsx');
 var Profile = require('./components/profile/Profile.jsx');
 var Events = require('./components/events/Events.jsx');
-var EventDetail = require('./components/events/EventDetail.jsx');
+var Event = require('./components/event/Event.jsx');
 
 var history = createHistory();
 
@@ -27,7 +27,7 @@ ReactDOM.render((
       <Route path='account' component={Account} />
       <Route path='/user/:userId' component={Profile} />
       <Route path='events' component={Events} />
-      <Route path='events/:eventId' component={EventDetail} />
+      <Route path='events/:eventId' component={Event} />
     </Route>
   </Router>
 ), document.getElementById('example'));

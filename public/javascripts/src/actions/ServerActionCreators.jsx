@@ -59,6 +59,14 @@ var ServerActionCreators = {
       json: json,
       errors: errors
     });
+  },
+
+  receiveEvent: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_EVENT,
+      json: json,
+      errors: errors
+    });
   }
 
 }
