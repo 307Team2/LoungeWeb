@@ -46,7 +46,7 @@ var Home = React.createClass({
       <div>
         <h1>Welcome to Lounge!</h1>
         <ButtonToolbar>
-          <Button componentClass={Link} to={'/signup'}>Sign Up</Button>
+          <a href="/signup"><Button>Sign Up</Button></a>
           <Button componentClass={Link} to={'/login'}>Log In</Button>
         </ButtonToolbar>
       </div>

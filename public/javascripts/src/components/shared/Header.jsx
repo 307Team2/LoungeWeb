@@ -47,7 +47,7 @@ var Header = React.createClass({
         </NavDropdown>
       );
     } else {
-      return <NavItem componentClass={Link} to={'/signup'}>Sign Up</NavItem>;
+      return <NavItem href='/signup'>Sign Up</NavItem>;
     }
   },
 
