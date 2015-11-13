@@ -16,8 +16,12 @@ var getStateFromStores = function() {
   return {
     events: EventsStore.getAllEvents(),
     filter: EventsStore.getFilter(),
+<<<<<<< HEAD
     createEvent: EventsStore.isCreateEvent(),
     user: AccountStore.getUser()
+=======
+    createEvent: EventsStore.isCreateEvent()
+>>>>>>> c54199885a95c082ba65f631c49822a9d730ec6f
   };
 }
 
@@ -28,13 +32,19 @@ var Events = React.createClass({
 
   componentDidMount: function() {
     EventsStore.addChangeListener(this._onChange);
+<<<<<<< HEAD
     AccountStore.addChangeListener(this._onChange);
+=======
+>>>>>>> c54199885a95c082ba65f631c49822a9d730ec6f
     WebAPIUtils.loadEvents();
   },
 
   componentWillUnmount: function() {
     EventsStore.removeChangeListener(this._onChange);
+<<<<<<< HEAD
     AccountStore.removeChangeListener(this._onChange);
+=======
+>>>>>>> c54199885a95c082ba65f631c49822a9d730ec6f
   },
 
   _onChange: function() {
