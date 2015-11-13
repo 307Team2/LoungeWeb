@@ -23,7 +23,7 @@ ReactDOM.render((
       <Route path='login' component={Login} />
       <Route path='feed' component={Feed} />
       <Route path='account' component={Account} />
-      <Route path='user/:userId' component={Profile} />
+      <Route path='/user/:userId' component={Profile} />
     </Route>
   </Router>
 ), document.getElementById('example'));

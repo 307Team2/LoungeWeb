@@ -32,6 +32,7 @@ module.exports = React.createClass({
     return (
       <div className="profile">
         <h1>Profile for {this.state.data.firstName} {this.state.data.lastName}</h1>
+        <img src={this.state.data.photoUrl} alt=""/>
       </div>
     );
   }

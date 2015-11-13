@@ -42741,7 +42741,7 @@ ReactDOM.render((
       React.createElement(Route, {path: "login", component: Login}), 
       React.createElement(Route, {path: "feed", component: Feed}), 
       React.createElement(Route, {path: "account", component: Account}), 
-      React.createElement(Route, {path: "user/:userId", component: Profile})
+      React.createElement(Route, {path: "/user/:userId", component: Profile})
     )
   )
 ), document.getElementById('example'));
@@ -43211,7 +43211,8 @@ module.exports = React.createClass({displayName: "exports",
   render: function() {
     return (
       React.createElement("div", {className: "profile"}, 
-        React.createElement("h1", null, "Profile for ", this.state.data.firstName, " ", this.state.data.lastName)
+        React.createElement("h1", null, "Profile for ", this.state.data.firstName, " ", this.state.data.lastName), 
+        React.createElement("img", {src: this.state.data.photoUrl, alt: ""})
       )
     );
   }
@@ -43973,6 +43974,17 @@ var WebAPIUtils = {
         }
         WebAPIUtils.loadAccountData();
       });
+  },
+
+  loadProfileData: function(id) {
+    request.get(APIEndpoints.PROFILE + id)
+      .set('Accept', 'application/json')
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveProfileData(json, null);
+        }
+      })
   },
 
   loadProfileData: function(id) {
