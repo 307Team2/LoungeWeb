@@ -43481,28 +43481,34 @@ var Header = React.createClass({displayName: "Header",
 
   getInitialState: function() {
     return {
-      isDropdownOpen: false
+      isViewDropdownOpen: false,
+      isUserDropdownOpen: false
     };
   },
 
-  toggleDropdown: function() {
+  toggleViewDropdown: function() {
     this.setState({
-      isDropdownOpen: !this.state.isDropdownOpen
+      isViewDropdownOpen: !this.state.isViewDropdownOpen
+    });
+  },
+
+  toggleUserDropdown: function() {
+    this.setState({
+      isUserDropdownOpen: !this.state.isUserDropdownOpen
     });
   },
 
   logout: function() {
-    this.toggleDropdown();
+    this.toggleUserDropdown();
     SessionActionCreators.logout();
   },
 
-  renderDropdown: function() {
+  renderViewDropdown: function() {
     if (this.props.isLoggedIn) {
       return(
-        React.createElement(NavDropdown, {title: this.props.user.firstName, id: "collapsible-navbar-dropdown", open: this.state.isDropdownOpen, onToggle: this.toggleDropdown}, 
-          React.createElement("li", null, React.createElement(Link, {to: '/user/'+this.props.user._id, onClick: this.toggleDropdown}, "My Profile")), 
-          React.createElement("li", null, React.createElement(Link, {to: '/account', onClick: this.toggleDropdown}, "Account")), 
-          React.createElement("li", null, React.createElement(Link, {to: '/', onClick: this.logout}, "Logout"))
+        React.createElement(NavDropdown, {title: "View", id: "collapsible-navbar-dropdown", open: this.state.isViewDropdownOpen, onToggle: this.toggleViewDropdown}, 
+          React.createElement("li", null, React.createElement(Link, {to: "/feed/", onClick: this.toggleViewDropdown}, "Feed")), 
+          React.createElement("li", null, React.createElement(Link, {to: "", onClick: this.toggleViewDropdown}, "Events"))
         )
       );
     } else {
@@ -43510,11 +43516,26 @@ var Header = React.createClass({displayName: "Header",
     }
   },
 
+  renderUserDropdown: function() {
+    if (this.props.isLoggedIn) {
+      return(
+        React.createElement(NavDropdown, {title: this.props.user.firstName, id: "collapsible-navbar-dropdown2", open: this.state.isUserDropdownOpen, onToggle: this.toggleUserDropdown}, 
+          React.createElement("li", null, React.createElement(Link, {to: '/user/'+this.props.user._id, onClick: this.toggleUserDropdown}, "My Profile")), 
+          React.createElement("li", null, React.createElement(Link, {to: '/account', onClick: this.toggleUserDropdown}, "Account")), 
+          React.createElement("li", null, React.createElement(Link, {to: '/', onClick: this.logout}, "Logout"))
+        )
+      );
+    } else {
+      return React.createElement(NavItem, {componentClass: Link, to: '/login'}, "Log In");
+    }
+  },
+
   render: function() {
     return (
       React.createElement(Navbar, null, 
         React.createElement(NavBrand, null, React.createElement(Link, {to: '/'}, "Lounge")), 
-        React.createElement(Nav, {right: true}, this.renderDropdown())
+        React.createElement(Nav, null, this.renderViewDropdown()), 
+        React.createElement(Nav, null, this.renderUserDropdown())
       )
     );
   }

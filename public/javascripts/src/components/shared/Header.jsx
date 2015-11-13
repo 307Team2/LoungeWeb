@@ -22,28 +22,34 @@ var Header = React.createClass({
 
   getInitialState: function() {
     return {
-      isDropdownOpen: false
+      isViewDropdownOpen: false,
+      isUserDropdownOpen: false
     };
   },
 
-  toggleDropdown: function() {
+  toggleViewDropdown: function() {
     this.setState({
-      isDropdownOpen: !this.state.isDropdownOpen
+      isViewDropdownOpen: !this.state.isViewDropdownOpen
+    });
+  },
+
+  toggleUserDropdown: function() {
+    this.setState({
+      isUserDropdownOpen: !this.state.isUserDropdownOpen
     });
   },
 
   logout: function() {
-    this.toggleDropdown();
+    this.toggleUserDropdown();
     SessionActionCreators.logout();
   },
 
-  renderDropdown: function() {
+  renderViewDropdown: function() {
     if (this.props.isLoggedIn) {
       return(
-        <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
-          <li><Link to={'/user/'+this.props.user._id} onClick={this.toggleDropdown}>My Profile</Link></li>
-          <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
-          <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
+        <NavDropdown title="View" id="collapsible-navbar-dropdown" open={this.state.isViewDropdownOpen} onToggle={this.toggleViewDropdown}>
+          <li><Link to="/feed/" onClick={this.toggleViewDropdown}>Feed</Link></li>
+          <li><Link to="" onClick={this.toggleViewDropdown}>Events</Link></li>
         </NavDropdown>
       );
     } else {
@@ -51,11 +57,26 @@ var Header = React.createClass({
     }
   },
 
+  renderUserDropdown: function() {
+    if (this.props.isLoggedIn) {
+      return(
+        <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown2" open={this.state.isUserDropdownOpen} onToggle={this.toggleUserDropdown}>
+          <li><Link to={'/user/'+this.props.user._id} onClick={this.toggleUserDropdown}>My Profile</Link></li>
+          <li><Link to={'/account'} onClick={this.toggleUserDropdown}>Account</Link></li>
+          <li><Link to={'/'} onClick={this.logout}>Logout</Link></li>
+        </NavDropdown>
+      );
+    } else {
+      return <NavItem componentClass={Link} to={'/login'}>Log In</NavItem>;
+    }
+  },
+
   render: function() {
     return (
       <Navbar>
         <NavBrand><Link to={'/'}>Lounge</Link></NavBrand>
-        <Nav right>{this.renderDropdown()}</Nav>
+        <Nav>{this.renderViewDropdown()}</Nav>
+        <Nav>{this.renderUserDropdown()}</Nav>
       </Navbar>
     );
   }
