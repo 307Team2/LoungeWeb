@@ -2,6 +2,22 @@
 @import './bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 @import './bower_components/font-awesome/scss/font-awesome';
 
+.container {
+  @media (min-width: 1200px) {
+    width: 750px;
+  }
+  @media (min-width: 992px) {
+    width: 750px;
+  }
+  @media (min-width: 768px) {
+    width: 750px;
+  }
+}
+html, body {
+  background-color: #ECF0F1;
+}
+
 @import "loadingscreen";
 @import "events";
-
+@import "navigation";
+@import "panel";

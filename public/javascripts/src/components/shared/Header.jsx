@@ -41,7 +41,8 @@ var Header = React.createClass({
     if (this.props.isLoggedIn) {
       return(
         <Nav right>
-          <li><Link to={'/events'}>Events</Link></li>
+          <li><Link to={'/'}>Home</Link></li>
+            <li><Link to={'/events'}>Events</Link></li>
           <NavDropdown title={this.props.user.firstName} id="collapsible-navbar-dropdown" open={this.state.isDropdownOpen} onToggle={this.toggleDropdown}>
             <li><Link to={'/user/'+this.props.user._id} onClick={this.toggleDropdown}>My Profile</Link></li>
             <li><Link to={'/account'} onClick={this.toggleDropdown}>Account</Link></li>
@@ -57,7 +58,10 @@ var Header = React.createClass({
   render: function() {
     return (
       <Navbar>
-        <NavBrand><Link to={'/'}>Lounge</Link></NavBrand>
+        <NavBrand><Link to={'/'}>
+          <img src='/images/logo.svg'/>
+          <h1>FIRESIDE</h1>
+        </Link></NavBrand>
         {this.getNavRight()}
       </Navbar>
     );

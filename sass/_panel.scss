@@ -1,0 +1,26 @@
+.panel-default {
+  border-radius: 0;
+  background-color: white;
+  border: none;
+  box-shadow: 0 1px 3px #BDC3C7;
+
+  h4 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    input, textarea, button {
+      border-radius: 0;
+    }
+    .btn-primary {
+      background-color: #E67E22;
+      border: none;
+      outline: none;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+}
