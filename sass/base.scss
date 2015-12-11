@@ -17,6 +17,22 @@ html, body {
   background-color: #ECF0F1;
 }
 
+.btn {
+  border-radius: 0;
+  border: none;
+  outline: none;
+  box-shadow: 0 1px 3px #BDC3C7;
+}
+.btn-primary {
+  background-color: #E67E22;
+  &:active:focus, &:active, &:focus, &:hover {
+    color: white;
+    background-color: #D35400;
+    outline: none;
+    box-shadow: none;
+  }
+}
+
 @import "loadingscreen";
 @import "events";
 @import "navigation";
