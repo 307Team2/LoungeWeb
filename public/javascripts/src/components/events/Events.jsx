@@ -49,7 +49,7 @@ var Events = React.createClass({
 
   getEventCreationButton: function() {
     if (!this.state.createEvent) {
-      return <Button bsStyle="primary" onClick={this.toggleCreateEvent}>Create Event</Button>;
+      return <Button className='event-button' bsStyle="primary" onClick={this.toggleCreateEvent}>Create Event</Button>;
     }
   },
 

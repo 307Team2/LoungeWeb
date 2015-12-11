@@ -32,7 +32,7 @@ var EventFilter = React.createClass({
   },
   render: function() {
     return (
-      <ButtonGroup>
+      <ButtonGroup className='events-filter'>
         {this.getBronze()}
         {this.getSilver()}
         {this.getGold()}
