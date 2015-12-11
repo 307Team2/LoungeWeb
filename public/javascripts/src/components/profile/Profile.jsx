@@ -37,17 +37,16 @@ module.exports = React.createClass({
     return (
       <div className="profile">
         <Row>
-          <Col sm={4}>
+          <Col sm={3}>
+          </Col>
+          <Col sm={6}>
             <Panel header={this.state.data.firstName + " " + this.state.data.lastName}>
               <div><Image src={this.state.data.photoUrl} responsive /></div>
-              <div>{this.state.data.age}</div>
-              <div>{this.state.data.location}</div>
-              <div>{this.state.data.organization}</div>
-              <div>{this.state.data.jobTitle}</div>
+              <div>Age: {this.state.data.age}</div>
+              <div>Location: {this.state.data.location}</div>
+              <div>Organization: {this.state.data.organization}</div>
+              <div>Title: {this.state.data.jobTitle}</div>
             </Panel>
-          </Col>
-          <Col sm={8}>
-            <Feed/>
           </Col>
         </Row>
       </div>

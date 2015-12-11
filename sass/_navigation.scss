@@ -1,0 +1,28 @@
+.navbar-default {
+  background-color: white;
+
+  .navbar-brand {
+    padding-top: 10px;
+    img, h1 {
+      display: inline-block;
+      height: 100%;
+    }
+    h1 {
+      position: relative;
+      font-family: 'Raleway';
+      font-weight: 800;
+      font-size: 1.2em;
+      margin: 0 0 0 0.5em;
+      top: 4px;
+      color: black;
+      letter-spacing: 0.5em;
+    }
+  }
+
+  .navbar-nav > li > a {
+    color: #7F8C8D;
+    &:hover {
+      background-color: #ECF0F1;
+    }
+  }
+}

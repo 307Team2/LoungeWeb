@@ -1,17 +1,80 @@
 .events {
-  max-width: 40em;
   margin: 0 auto;
 
   .event-dashboard {
 
     margin-bottom: 15px;
-    .btn-primary {
-      width: 100%;
+
+    .events-filter {
+      box-shadow: 0 1px 3px #BDC3C7;
+
+      .btn {
+        border-radius: 0;
+        border: none;
+        outline: none;
+
+        &.active {
+          box-shadow: none;
+          background-color: #E67E22;
+          color: white;
+        }
+      }
     }
   }
 
+  .event-button {
+    background-color: #E67E22;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    float: right;
+    box-shadow: 0 1px 3px #BDC3C7;
+
+    &:active:focus {
+      background-color: #D35400;
+      outline: none;
+    }
+  }
   .create-event {
     margin-bottom: 15px;
+    background-color: white;
+    box-shadow: 0 1px 3px #BDC3C7;
+  }
+
+  .create-event-btn {
+    background-color: #E67E22;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    color: white;
+    margin-right: 15px;
+    box-shadow: 0 1px 3px #BDC3C7;
+
+    &:active:focus {
+      color: white;
+      background-color: #D35400;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .create-event-cancel-btn {
+    border-radius: 0;
+    outline: none;
+    border: none;
+    box-shadow: 0 1px 3px #BDC3C7;
+
+    &:hover {
+      background-color: white;
+      border-color: #ccc;
+    }
+
+    &:active:focus {
+      background-color: #eee;
+      border-color: #ccc;
+      outline: none;
+      box-shadow: none;
+    }
   }
 
   ul {
@@ -19,9 +82,9 @@
   }
 
   .event-item {
+    background-color: white;
     list-style: none;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    box-shadow: 0 1px 3px #BDC3C7;
     margin-bottom: 15px;
     padding: 5px;
 
@@ -29,7 +92,7 @@
       color: #333;
       &:hover {
         text-decoration: none;
-        color: #337ab7;
+        color: #E67E22;
       }
       h3 {
         margin-top: 10px;
@@ -38,6 +101,18 @@
 
     .event-rsvp {
       margin-bottom: 10px;
+      box-shadow: 0 1px 3px #BDC3C7;
+
+      button {
+        border-radius: 0;
+        border: none;
+
+        &.active {
+          background-color: #E67E22;
+          color: white;
+          box-shadow: none;
+        }
+      }
     }
 
     .event-date {

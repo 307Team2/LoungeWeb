@@ -67,13 +67,13 @@ var Signup = React.createClass({
     return(
       <Panel header="Sign Up">
         <form onSubmit={this._onSubmit}>
-          <Input type="email" label="email" id="email" ref="email" onChange={this.handleChange}/>
-          <Input type="text" label="firstName" id="firstName" ref="firstName" onChange={this.handleChange}/>
-          <Input type="text" label="lastName" id="lastName" ref="lastName" onChange={this.handleChange}/>
-          <Input type="number" label="age" id="age" ref="age" onChange={this.handleChange}/>
-          <Input type="text" label="location" id="location" ref="location" onChange={this.handleChange}/>
-          <Input type="text" label="organization" id="organization" ref="organization" onChange={this.handleChange}/>
-          <Input type="text" label="jobTitle" id="jobTitle" ref="jobTitle" onChange={this.handleChange}/>
+          <Input type="email" label="Email" id="email" ref="email" onChange={this.handleChange}/>
+          <Input type="text" label="First Name" id="firstName" ref="firstName" onChange={this.handleChange}/>
+          <Input type="text" label="Last Name" id="lastName" ref="lastName" onChange={this.handleChange}/>
+          <Input type="number" label="Age" id="age" ref="age" onChange={this.handleChange}/>
+          <Input type="text" label="Location" id="location" ref="location" onChange={this.handleChange}/>
+          <Input type="text" label="Organization" id="organization" ref="organization" onChange={this.handleChange}/>
+          <Input type="text" label="Job Title" id="jobTitle" ref="jobTitle" onChange={this.handleChange}/>
           <div className="form-control">
             <input data-fp-apikey="AsEmxeHJuRNehRzcFoPLkz" ref="filepicker" type="filepicker"/>
           </div>

@@ -28,10 +28,10 @@ var CreatePost = React.createClass({
 
   render: function() {
     return(
-      <Panel header="Create a new post">
+      <Panel>
         <form onSubmit={this._onSubmit}>
           <Input type="textarea" ref="content" placeholder="What's on your mind?" onChange={this.handleChange}/>
-          <ButtonInput type="submit" bsStyle="primary" value="Submit" disabled={!this.state.content}/>
+          <ButtonInput type="submit" bsStyle="primary" value="Share" disabled={!this.state.content}/>
         </form>
       </Panel>
     );

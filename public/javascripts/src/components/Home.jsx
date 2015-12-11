@@ -57,10 +57,7 @@ var Home = React.createClass({
     return(
       <div className="homepage">
         <Row>
-          <Col sm={4}>
-
-          </Col>
-          <Col sm={8}>
+          <Col sm={12}>
             <Feed/>
           </Col>
         </Row>
@@ -76,7 +73,7 @@ var Home = React.createClass({
         </div>
       );
     }
-   
+
     return (
       <div>
         {this.renderLandingPage()}
