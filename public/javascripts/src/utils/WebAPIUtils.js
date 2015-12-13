@@ -231,6 +231,23 @@ var WebAPIUtils = {
       })
   },
 
+  createComment: function(content, postId) {
+    request.post(APIEndpoints.CREATE_COMMENT + postId + "/comments")
+      .send({
+        commentContent: content
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        } else {
+          json = JSON.parse(res.text);
+          ServerActionCreators.updatePost(json, null);
+        }
+      });
+  },
+
   loadUsers: function() {
     request.get(APIEndpoints.USERS)
       .set('Accept', 'application/json')
@@ -285,7 +302,7 @@ var WebAPIUtils = {
           }
         }
       });
-  },
+  }
 
 
 }
