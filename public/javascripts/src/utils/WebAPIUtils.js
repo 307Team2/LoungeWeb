@@ -18,7 +18,8 @@ var WebAPIUtils = {
         organization: organization,
         jobTitle: jobTitle,
         password: password,
-        photoUrl: photoUrl
+        photoUrl: photoUrl,
+        isAdmin: false
       })
       .set('Accept', 'application/json')
       .end(function(error, res) {
@@ -203,7 +204,7 @@ var WebAPIUtils = {
           console.error(error);
         } else {
           json = JSON.parse(res.text);
-          WebAPIUtils.loadEvents();          
+          WebAPIUtils.loadEvents();
         }
       });
   },
@@ -228,6 +229,33 @@ var WebAPIUtils = {
           ServerActionCreators.receiveProfileData(json, null);
         }
       })
+  },
+
+  loadUsers: function() {
+    request.get(APIEndpoints.USERS)
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.receiveUsers(json, null);
+        }
+      });
+  },
+
+  deleteUser: function(username) {
+    request.del(APIEndpoints.DELETE_USER)
+      .send({
+        username: username
+      })
+      .set('Accept', 'application/json')
+      .set('Authorization', sessionStorage.getItem('accessToken'))
+      .end(function(error, res) {
+        if (res) {
+          json = JSON.parse(res.text);
+          ServerActionCreators.deleteUser(json, null);
+        }
+      });
   }
 
 }

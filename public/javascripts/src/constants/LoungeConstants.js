@@ -26,8 +26,11 @@ var LoungeConstants = {
     // Events
     EVENTS:            APIRoot + "/events/all",
     CREATE_EVENT:      APIRoot + "/events/create",
-    EVENTS_BASE:       APIRoot + "/events/"
+    EVENTS_BASE:       APIRoot + "/events/",
 
+    // Admin
+    USERS:             APIRoot + "/users",
+    DELETE_USER:       APIRoot + "/account"
   },
 
   ActionTypes: keyMirror({
@@ -51,10 +54,13 @@ var LoungeConstants = {
     RECEIVE_EVENTS: null,
     RECEIVE_CREATED_EVENT: null,
     TOGGLE_CREATE_EVENT: null,
-    
+
     // Event
     RECEIVE_EVENT: null,
 
+    // Admin
+    RECEIVE_USERS: null,
+    DELETE_USER: null
   })
 
 }

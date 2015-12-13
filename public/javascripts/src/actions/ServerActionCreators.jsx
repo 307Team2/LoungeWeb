@@ -75,8 +75,23 @@ var ServerActionCreators = {
       json: json,
       errors: errors
     });
-  }
+  },
 
+  receiveUsers: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_USERS,
+      json: json,
+      errors: errors
+    });
+  },
+
+  deleteUser: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.DELETE_USER,
+      json: json,
+      errors: errors
+    });
+  }
 }
 
 module.exports = ServerActionCreators;
