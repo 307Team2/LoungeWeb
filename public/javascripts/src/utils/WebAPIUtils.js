@@ -256,7 +256,37 @@ var WebAPIUtils = {
           ServerActionCreators.deleteUser(json, null);
         }
       });
-  }
+  },
+
+  createUser: function(email, firstName, lastName, age, location, organization, jobTitle, password, photoUrl) {
+    request.post(APIEndpoints.SIGNUP)
+      .send({
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        location: location,
+        organization: organization,
+        jobTitle: jobTitle,
+        password: password,
+        photoUrl: photoUrl,
+        isAdmin: false
+      })
+      .set('Accept', 'application/json')
+      .end(function(error, res) {
+        if (error) {
+          console.error(error);
+        } else {
+          json = JSON.parse(res.text);
+          if (json.error) {
+            ServerActionCreators.receiveUser(null, json.error);
+          } else {
+            ServerActionCreators.receiveUser(json, null);
+          }
+        }
+      });
+  },
+
 
 }
 

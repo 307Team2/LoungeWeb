@@ -60,7 +60,8 @@ var LoungeConstants = {
 
     // Admin
     RECEIVE_USERS: null,
-    DELETE_USER: null
+    DELETE_USER: null,
+    CREATE_USER: null
   })
 
 }

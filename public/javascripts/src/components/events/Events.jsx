@@ -19,7 +19,7 @@ var getStateFromStores = function() {
     createEvent: EventsStore.isCreateEvent(),
     user: AccountStore.getUser()
   };
-}
+};
 
 var Events = React.createClass({
   getInitialState: function() {

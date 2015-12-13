@@ -91,6 +91,14 @@ var ServerActionCreators = {
       json: json,
       errors: errors
     });
+  },
+
+  receiveUser: function(json, errors) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CREATE_USER,
+      json: json,
+      errors: errors
+    });
   }
 }
 

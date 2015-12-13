@@ -60,7 +60,6 @@ AdminStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.DELETE_USER:
       if (payload.json) {
-        // console.log(payload.json);
         _.remove(_users, function(user) {
           console.log(user);
           return user.username === payload.json.username;
@@ -74,9 +73,9 @@ AdminStore.dispatchToken = AppDispatcher.register(function(payload) {
       AdminStore.emitChange();
       break;
 
-    case ActionTypes.TOGGLE_CREATE_USER:
-      _createUser = !_createUser;
-      AdminStore.emitChange();
+    case ActionTypes.CREATE_USER:
+      console.log('test');
+      WebAPIUtils.loadUsers();
       break;
 
     case ActionTypes.TOGGLE_DELETE_USER:
