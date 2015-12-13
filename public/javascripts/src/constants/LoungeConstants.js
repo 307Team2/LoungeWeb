@@ -13,6 +13,7 @@ var LoungeConstants = {
     // Feed
     POSTS:             APIRoot + "/posts/all",
     CREATE_POST:       APIRoot + "/posts/create",
+    CREATE_COMMENT:    APIRoot + "/posts/",
 
     // Account
     ACCOUNT_DATA:      APIRoot + "/account/data",
@@ -41,6 +42,7 @@ var LoungeConstants = {
     // Feed
     RECEIVE_POSTS: null,
     RECEIVE_CREATED_POST: null,
+    UPDATE_POST: null,
 
     // Account
     RECEIVE_ACCOUNT_DATA: null,

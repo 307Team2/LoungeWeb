@@ -44,7 +44,7 @@ var Home = React.createClass({
   renderLandingPage: function() {
     return(
       <div>
-        <h1>Welcome to Lounge!</h1>
+        <h1>Welcome to Fireside!</h1>
         <ButtonToolbar>
           <a href="/signup"><Button>Sign Up</Button></a>
           <Button componentClass={Link} to={'/login'}>Log In</Button>

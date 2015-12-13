@@ -3,6 +3,7 @@ var LoungeConstants = require('../constants/LoungeConstants.js');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var _ = require('lodash');
 
 var ActionTypes = LoungeConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
@@ -12,6 +13,16 @@ var _lastTimestamp = Date.now();
 var _limit = 10;
 var _errors = [];
 var _isMorePosts = true;
+
+var updatePost = function(updatedPost) {
+  _posts = _.map(_posts, function(post) {
+    if (post._id === updatedPost._id) {
+      return updatedPost;
+    } else {
+      return post;
+    }
+  });
+};
 
 var FeedStore = assign({}, EventEmitter.prototype, {
   
@@ -66,6 +77,16 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
     case ActionTypes.RECEIVE_CREATED_POST:
       if (payload.json) {
         _posts.unshift(payload.json.post);
+      }
+      if (payload.errors) {
+        _errors = payload.errors;
+      }
+      FeedStore.emitChange();
+      break;
+
+    case ActionTypes.UPDATE_POST:
+      if (payload.json) {
+        updatePost(payload.json);
       }
       if (payload.errors) {
         _errors = payload.errors;
